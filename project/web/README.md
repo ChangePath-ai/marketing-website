@@ -51,7 +51,7 @@ Log in at https://app.brevo.com. Menu names below are as of Oct 2026; Brevo occa
 | `BREVO_SENDER_EMAIL` | yes | `hello@changepath.ai` (verified in Brevo) |
 | `NOTIFY_EMAIL` | yes | `support@changepath.ai` (comma-separate several) |
 | `BREVO_SENDER_NAME` | no | `ChangePath` |
-| `SITE_URL` | recommended | `https://changepath.ai` (used for the confirmation redirect and the origin check) |
+| `SITE_URL` | recommended | `https://get.changepath.ai` (used for the confirmation redirect and the origin check) |
 | `BREVO_DOI_REDIRECT_URL` | no | overrides the default `SITE_URL/confirmed?lang=…` |
 | `SIGNUP_TOKEN_SECRET` | no | any long random string; defaults to deriving from the API key |
 
@@ -59,14 +59,14 @@ Log in at https://app.brevo.com. Menu names below are as of Oct 2026; Brevo occa
 
 4. Deploy. Vercel gives you a `*.vercel.app` address; test there first: submit the form with your own address, confirm the email, and check the contact appears in the right Brevo list with its attributes.
 
-## 3. Domain
+## 3. Domain: get.changepath.ai
 
-Add the domain under the project's **Settings → Domains** and set the DNS records Vercel shows you, at whoever manages changepath.ai's DNS. Then set `SITE_URL` to that address and redeploy.
+The page runs on the subdomain `get.changepath.ai`. The main site at www.changepath.ai stays where it is, including the Impressum and Datenschutz pages the footer links to.
 
-The footer links to https://www.changepath.ai/impressum and https://www.changepath.ai/datenschutz, which currently live on the existing site. If this page takes over `www.changepath.ai`, those two pages stop existing unless you move them here first. A German site must keep its Impressum reachable, so either:
-
-- launch this page on a subdomain (e.g. `join.changepath.ai`) and keep the existing site, or
-- move the Impressum and Datenschutz pages into `public/` before switching the domain, and update the footer links.
+1. In Vercel, open the project → **Settings → Domains** → add `get.changepath.ai`.
+2. Vercel shows a **CNAME** record for `get` (usually pointing to `cname.vercel-dns.com`; use the exact value Vercel shows). Add it wherever changepath.ai's DNS is managed. If the domain is registered through Wix, that's the domain's **DNS records** page in your Wix account; add the CNAME there and leave the existing records alone.
+3. Wait until Vercel shows the domain as **Valid** (usually minutes, up to a few hours). Vercel sets up HTTPS on its own.
+4. Set `SITE_URL` to `https://get.changepath.ai` and redeploy (**Deployments → ⋯ → Redeploy**), so confirmation emails send people back to `https://get.changepath.ai/confirmed`.
 
 ## Links people can share
 
