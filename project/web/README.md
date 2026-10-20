@@ -76,7 +76,8 @@ Every change that lands on `main` in `ChangePath-ai/marketing-website` goes live
 
 1. **Ask Claude:** start a Claude Code session with `ChangePath-ai/marketing-website` selected and describe the change, e.g. "change the hero headline to …". Claude edits the code and pushes it.
 2. **Edit on GitHub:** open the file on github.com, click the pencil icon, edit, then **Commit changes** to `main`. Good for small text edits.
-3. **Preview first:** commit to a separate branch instead of `main`. Vercel builds a preview with its own URL and leaves the live site alone. When it looks right, merge the branch into `main`.
+3. **From Claude Design:** make the change in Claude Design, export it to Claude Code in a session with this repository, and run `/apply-design` (or say "apply the design changes"). The skill in `.claude/skills/apply-design/` works out what changed, applies it to `project/web` without overwriting the Brevo form, and pushes a preview branch for you to check.
+4. **Preview first:** commit to a separate branch instead of `main`. Vercel builds a preview with its own URL and leaves the live site alone. When it looks right, merge the branch into `main`.
 
 **Where things live**
 
