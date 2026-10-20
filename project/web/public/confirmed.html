@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ChangePath – You’re confirmed</title>
+<link rel="icon" href="assets/shapes.png">
+<link rel="stylesheet" href="icons.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+.confirm{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;background:var(--ink);position:relative;overflow:hidden}
+.confirm .waitlist-shape{left:auto;right:-120px;top:-160px;bottom:auto}
+.confirm .form-card{max-width:520px;width:100%;position:relative}
+.confirm img.logo{height:28px;width:auto;display:block;margin-bottom:8px}
+</style>
+</head>
+<body>
+<main class="confirm">
+  <img src="assets/shapes.png" alt="" class="waitlist-shape">
+  <div class="form-card">
+    <div class="done">
+      <img src="assets/logo.png" alt="ChangePath" class="logo" width="80" height="28">
+      <div class="done-check"><i class="ph-bold ph-check"></i></div>
+      <h1 class="done-title" style="margin:0" data-t="title">You’re confirmed.</h1>
+      <p class="done-body" data-t="body">Thanks for confirming your email. You’re on the ChangePath list, and we’ll be in touch as soon as early access opens.</p>
+      <a href="/" class="btn btn-md btn-primary" data-t="back">Back to ChangePath</a>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const de = new URLSearchParams(location.search).get('lang') === 'de';
+  if (!de) return;
+  const T = {
+    title: 'Bestätigt.',
+    body: 'Danke für deine Bestätigung. Du bist auf der ChangePath-Liste – wir melden uns, sobald der Early Access startet.',
+    back: 'Zurück zu ChangePath'
+  };
+  document.documentElement.lang = 'de';
+  document.title = 'ChangePath – Bestätigt';
+  document.querySelectorAll('[data-t]').forEach(n => { n.textContent = T[n.dataset.t]; });
+  document.querySelector('a[href="/"]').href = '/?lang=de';
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* Phosphor Icons 2.1.1 (MIT), bold weight, subset to the icons this page uses. */
+@font-face {
+  font-family: "Phosphor-Bold";
+  src:url("fonts/Phosphor-Bold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.ph-bold {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "Phosphor-Bold" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ph-bold.ph-arrow-right:before {
+  content: "\e06c";
+}
+.ph-bold.ph-stack:before {
+  content: "\e466";
+}
+.ph-bold.ph-eye:before {
+  content: "\e220";
+}
+.ph-bold.ph-lock-simple:before {
+  content: "\e308";
+}
+.ph-bold.ph-clock:before {
+  content: "\e19a";
+}
+.ph-bold.ph-calendar-check:before {
+  content: "\e712";
+}
+.ph-bold.ph-linkedin-logo:before {
+  content: "\e2ee";
+}
+.ph-bold.ph-play-circle:before {
+  content: "\e3d2";
+}
+.ph-bold.ph-flow-arrow:before {
+  content: "\e6ec";
+}
+.ph-bold.ph-files:before {
+  content: "\e710";
+}
+.ph-bold.ph-minus:before {
+  content: "\e32a";
+}
+.ph-bold.ph-plus:before {
+  content: "\e3d4";
+}
+.ph-bold.ph-check:before {
+  content: "\e182";
+}
