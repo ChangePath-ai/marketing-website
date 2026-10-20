@@ -23,17 +23,21 @@ After clicking the confirmation link, people land on `/confirmed` (EN or DE).
 
 Contact attributes written: `FIRSTNAME`, `LASTNAME`, `LANGUAGE` (EN/DE), `AUDIENCE` (talent/employers), `FUNCTIONS` (talent, e.g. `Marketing, Other: HR`), `COMPANY` and `HIRING_ROLE` (employers), `LINKEDIN`.
 
+Repository: https://github.com/ChangePath-ai/marketing-website
+
 ## 1. Set up Brevo
+
+Log in at https://app.brevo.com. Menu names below are as of Oct 2026; Brevo occasionally moves them.
 
 1. **Lists:** Contacts → Lists → create two lists, e.g. "Waitlist – Talent" and "Pilot – Employers". Note each list's ID.
 2. **Attributes:** Contacts → Settings → Contact attributes. `FIRSTNAME` and `LASTNAME` exist already. Add these as **Text** attributes: `LANGUAGE`, `AUDIENCE`, `FUNCTIONS`, `COMPANY`, `HIRING_ROLE`, `LINKEDIN`.
 3. **Double opt-in templates:** Campaigns → Templates → create a template for the confirmation email, one in English and one in German. Its tag must be `optin` and its button link must be `{{ doubleoptin }}`. Note the template IDs.
 4. **Sender:** Senders, domains & IPs → add and verify a sender such as `hello@changepath.ai` (also authenticate the changepath.ai domain, so mail doesn't land in spam).
-5. **API key:** SMTP & API → API keys → generate a key.
+5. **API key:** https://app.brevo.com/settings/keys/api → **Generate a new API key**. Copy it straight into Vercel (step 2.3); Brevo shows it only once.
 
 ## 2. Deploy on Vercel
 
-1. Push this repository to GitHub, then in Vercel choose **Add New → Project** and import it.
+1. Go to https://vercel.com/new and import `ChangePath-ai/marketing-website`. If it isn't listed, click **Adjust GitHub App Permissions** and give Vercel access to that repository in the ChangePath-ai organization. A private repository owned by an organization needs a Vercel Pro team; the Hobby plan can't deploy it.
 2. Set **Root Directory** to `project/web`. Framework preset: **Other**. Leave build settings empty (`vercel.json` already sets them).
 3. Under **Settings → Environment Variables** add:
 
@@ -53,9 +57,16 @@ Contact attributes written: `FIRSTNAME`, `LASTNAME`, `LANGUAGE` (EN/DE), `AUDIEN
 
 \* `BREVO_DOI_TEMPLATE_ID` can be set instead as a single template for both languages.
 
-4. Deploy. To use your own domain, add it under **Settings → Domains**.
+4. Deploy. Vercel gives you a `*.vercel.app` address; test there first: submit the form with your own address, confirm the email, and check the contact appears in the right Brevo list with its attributes.
 
-Test the deployment with your own address: submit the form, confirm the email, and check the contact appears in the right list with its attributes.
+## 3. Domain
+
+Add the domain under the project's **Settings → Domains** and set the DNS records Vercel shows you, at whoever manages changepath.ai's DNS. Then set `SITE_URL` to that address and redeploy.
+
+The footer links to https://www.changepath.ai/impressum and https://www.changepath.ai/datenschutz, which currently live on the existing site. If this page takes over `www.changepath.ai`, those two pages stop existing unless you move them here first. A German site must keep its Impressum reachable, so either:
+
+- launch this page on a subdomain (e.g. `join.changepath.ai`) and keep the existing site, or
+- move the Impressum and Datenschutz pages into `public/` before switching the domain, and update the footer links.
 
 ## Links people can share
 
