@@ -68,6 +68,32 @@ The page runs on the subdomain `get.changepath.ai`. The main site at www.changep
 3. Wait until Vercel shows the domain as **Valid** (usually minutes, up to a few hours). Vercel sets up HTTPS on its own.
 4. Set `SITE_URL` to `https://get.changepath.ai` and redeploy (**Deployments → ⋯ → Redeploy**), so confirmation emails send people back to `https://get.changepath.ai/confirmed`.
 
+## Making changes
+
+Every change that lands on `main` in `ChangePath-ai/marketing-website` goes live automatically, usually within a minute or two.
+
+**Ways to make a change**
+
+1. **Ask Claude:** start a Claude Code session with `ChangePath-ai/marketing-website` selected and describe the change, e.g. "change the hero headline to …". Claude edits the code and pushes it.
+2. **Edit on GitHub:** open the file on github.com, click the pencil icon, edit, then **Commit changes** to `main`. Good for small text edits.
+3. **Preview first:** commit to a separate branch instead of `main`. Vercel builds a preview with its own URL and leaves the live site alone. When it looks right, merge the branch into `main`.
+
+**Where things live**
+
+| What | File |
+|---|---|
+| All copy (EN/DE, talent/employers) | `public/copy.js` |
+| Layout and sections | `public/index.html` |
+| Colours, fonts, spacing | `public/styles.css` |
+| Form behaviour and language switching | `public/app.js` |
+| Brevo integration | `api/`, `lib/brevo.js` |
+
+**Good to know**
+
+- **Environment variables:** changing one in Vercel (e.g. a Brevo list ID) doesn't trigger a deploy. Redeploy under **Deployments → ⋯ → Redeploy**.
+- **Undo:** in Vercel's **Deployments** tab, open an earlier deployment → **⋯ → Instant Rollback**. The old version is back immediately; then fix the code on GitHub.
+- **Failed deploys:** check the status in the **Deployments** tab. If a deploy fails, the live site keeps running the last working version.
+
 ## Links people can share
 
 - `/?lang=de`: German version
