@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#0F0F4C"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ffac73"/><stop offset="1" stop-color="#6c5eff"/></linearGradient></defs><rect width="1200" height="800" fill="#0F0F4C"/><rect x="430" y="230" width="340" height="340" rx="90" fill="url(#g)"/><text x="600" y="455" font-family="sans-serif" font-weight="700" font-size="150" fill="#fff" text-anchor="middle">CP</text></svg></template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+@font-face{font-family:"Galano Classic";src:url("fonts/GalanoClassic-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-Light.woff2") format("woff2");font-weight:300;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:#0F0F4C;font-family:"Spline Sans",ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#2b00c6;text-decoration:none}
+a:hover{color:#3620cc}
+input::placeholder{color:#8a8a9a}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#fff">
+
+<header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(14px);border-bottom:1px solid #e8e8ea">
+  <div style="max-width:1280px;margin:0 auto;padding:14px clamp(20px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap">
+    <a href="#top" style="display:flex;align-items:center"><img src="assets/logo.png" alt="ChangePath" style="height:30px;width:auto;display:block"></a>
+    <nav style="display:flex;gap:26px;flex-wrap:wrap;font-size:14px;font-weight:500">
+      <a href="#vision" style="color:#0F0F4C" style-hover="color:#2b00c6">{{ t.navVision }}</a>
+      <a href="#functions" style="color:#0F0F4C" style-hover="color:#2b00c6">{{ t.navFunctions }}</a>
+      <a href="#how" style="color:#0F0F4C" style-hover="color:#2b00c6">{{ t.navHow }}</a>
+      <a href="#proof" style="color:#0F0F4C" style-hover="color:#2b00c6">{{ t.navProof }}</a>
+      <a href="#faq" style="color:#0F0F4C" style-hover="color:#2b00c6">{{ t.navFaq }}</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="display:flex;background:#EDEDFC;border-radius:9999px;padding:4px;gap:2px">
+        <button onClick="{{ setTalent }}" style="border:none;cursor:pointer;border-radius:9999px;padding:9px 16px;font:600 13px 'Spline Sans',sans-serif;background:{{ tabTalentBg }};color:{{ tabTalentFg }};transition:all .2s">{{ t.forTalent }}</button>
+        <button onClick="{{ setEmployers }}" style="border:none;cursor:pointer;border-radius:9999px;padding:9px 16px;font:600 13px 'Spline Sans',sans-serif;background:{{ tabEmpBg }};color:{{ tabEmpFg }};transition:all .2s">{{ t.forEmployers }}</button>
+      </div>
+      <div style="display:flex;gap:2px;font:600 12px 'Spline Sans',sans-serif;letter-spacing:.05em">
+        <button onClick="{{ setEn }}" style="border:none;background:none;cursor:pointer;padding:6px 6px;font:inherit;color:{{ enFg }}">EN</button>
+        <span style="color:#C5C5D8;padding:6px 0">/</span>
+        <button onClick="{{ setDe }}" style="border:none;background:none;cursor:pointer;padding:6px 6px;font:inherit;color:{{ deFg }}">DE</button>
+      </div>
+      <a href="#waitlist" style="background:#2b00c6;color:#fff;border-radius:9999px;padding:11px 20px;font-weight:600;font-size:14px" style-hover="background:#2200a0;color:#fff">{{ t.navCta }}</a>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ isPile }}" hint-placeholder-val="{{ true }}">
+<section id="top" data-screen-label="Hero A — The pile" style="background:#0F0F4C;color:#fff;overflow:hidden;position:relative">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,4vw,56px) clamp(64px,8vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:56px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <div style="font:600 12px 'Spline Sans',sans-serif;letter-spacing:.14em;color:#ffac73">{{ t.eyebrow }}</div>
+      <h1 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(44px,6.2vw,92px);line-height:1.02;letter-spacing:-0.01em;text-wrap:balance">
+        <span style="display:block;color:#fff">{{ t.heroA1 }}</span>
+        <span style="display:block;background:linear-gradient(to right,#ffac73,#ff9564 35%,#6c5eff 85%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:6px">{{ t.heroA2 }}</span>
+      </h1>
+      <p style="margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:#d4d4f5;max-width:560px;text-wrap:pretty">{{ t.heroSub }}</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#waitlist" style="background:#fff;color:#2b00c6;border-radius:9999px;padding:16px 28px;font-weight:600;font-size:16px;display:flex;align-items:center;gap:10px" style-hover="background:#EDEDFC;color:#2b00c6">{{ t.ctaPrimary }} <i class="ph-bold ph-arrow-right"></i></a>
+        <a href="#proof" style="border:1.5px solid rgba(255,255,255,0.4);color:#fff;border-radius:9999px;padding:15px 26px;font-weight:600;font-size:16px" style-hover="border-color:#fff;color:#fff">{{ t.ctaSecondary }}</a>
+      </div>
+    </div>
+
+    <div style="position:relative;height:540px;max-width:560px;width:100%;justify-self:center">
+      <div style="position:absolute;left:0;top:0;z-index:6;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:9999px;padding:8px 14px;font:600 11px 'Spline Sans',sans-serif;letter-spacing:.1em;display:flex;align-items:center;gap:8px"><i class="ph-bold ph-stack"></i>{{ t.pileTag }}</div>
+      <div style="position:absolute;left:4%;top:56px;width:min(340px,78%);background:#fff;border-radius:20px;padding:22px;transform:rotate(-9deg);opacity:.35">
+        <div style="height:10px;width:46%;background:#C5C5D8;border-radius:6px;margin-bottom:14px"></div>
+        <div style="font-size:13px;line-height:1.5;color:#5B5B6B">{{ t.cliche }}</div>
+      </div>
+      <div style="position:absolute;left:14%;top:84px;width:min(340px,78%);background:#fff;border-radius:20px;padding:22px;transform:rotate(-4deg);opacity:.5">
+        <div style="height:10px;width:38%;background:#C5C5D8;border-radius:6px;margin-bottom:14px"></div>
+        <div style="font-size:13px;line-height:1.5;color:#5B5B6B">{{ t.cliche }}</div>
+      </div>
+      <div style="position:absolute;left:6%;top:120px;width:min(340px,78%);background:#fff;border-radius:20px;padding:22px;transform:rotate(3deg);opacity:.7">
+        <div style="height:10px;width:52%;background:#C5C5D8;border-radius:6px;margin-bottom:14px"></div>
+        <div style="font-size:13px;line-height:1.5;color:#5B5B6B">{{ t.cliche }}</div>
+      </div>
+      <div style="position:absolute;left:18%;top:160px;width:min(340px,78%);background:#fff;border-radius:20px;padding:22px;transform:rotate(-1deg);opacity:.85;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:14px"><div style="height:10px;width:44%;background:#C5C5D8;border-radius:6px"></div><div style="font:600 10px 'Spline Sans',sans-serif;letter-spacing:.08em;color:#8a8a9a">CV.PDF</div></div>
+        <div style="font-size:13px;line-height:1.5;color:#5B5B6B">{{ t.cliche }}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px"><div style="height:7px;background:#EDEDFC;border-radius:4px"></div><div style="height:7px;width:80%;background:#EDEDFC;border-radius:4px"></div></div>
+      </div>
+      <div style="position:absolute;right:0;bottom:0;z-index:5;width:min(390px,94%);padding:2px;border-radius:26px;background:linear-gradient(135deg,#ffac73,#6c5eff);box-shadow:0 40px 90px rgba(0,0,0,0.5);transform:rotate(-2.5deg)">
+        <div style="background:#fff;border-radius:24px;padding:26px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:14px">
+          <img src="assets/shapes.png" alt="" style="position:absolute;right:-30px;top:-40px;width:150px;opacity:.28;pointer-events:none">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;position:relative">
+            <span style="background:linear-gradient(to right,#ff9564,#6c5eff);color:#fff;border-radius:9999px;padding:4px 12px;font:600 10px 'Spline Sans',sans-serif;letter-spacing:.06em">{{ t.badgeProof }}</span>
+            <span style="background:#EDEDFC;color:#2b00c6;border-radius:9999px;padding:4px 12px;font:600 10px 'Spline Sans',sans-serif;letter-spacing:.06em">{{ t.pileFn }}</span>
+          </div>
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:22px;line-height:1.25;color:#0F0F4C;position:relative;text-wrap:pretty">{{ t.pileTitle }}</div>
+          <div style="font-size:14px;color:#4728ff">{{ t.pileWho }}</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="aspect-ratio:4/3;border-radius:10px;background:repeating-linear-gradient(135deg,#f3f3f4 0 6px,#EDEDFC 6px 12px)"></div>
+            <div style="aspect-ratio:4/3;border-radius:10px;background:repeating-linear-gradient(135deg,#f3f3f4 0 6px,#EDEDFC 6px 12px)"></div>
+            <div style="aspect-ratio:4/3;border-radius:10px;background:repeating-linear-gradient(135deg,#f3f3f4 0 6px,#EDEDFC 6px 12px)"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding-top:12px;border-top:1px solid #e8e8ea;font:600 11px 'Spline Sans',sans-serif;letter-spacing:.05em;color:#3ac0a0"><i class="ph-bold ph-eye" style="font-size:14px"></i>{{ t.pileMeta }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isManifesto }}" hint-placeholder-val="{{ false }}">
+<section id="top" data-screen-label="Hero B — Manifesto" style="background:#fff;overflow:hidden;position:relative">
+  <img src="assets/shapes.png" alt="" style="position:absolute;right:-6%;top:-10%;width:min(560px,55vw);opacity:.55;pointer-events:none">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(20px,4vw,56px) clamp(56px,7vw,96px);position:relative;display:flex;flex-direction:column;gap:36px">
+    <div style="font:600 12px 'Spline Sans',sans-serif;letter-spacing:.14em;color:#2b00c6">{{ t.eyebrow }}</div>
+    <h1 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(52px,9.4vw,156px);line-height:.98;letter-spacing:-0.02em">
+      <span style="display:block;color:#0F0F4C">{{ t.heroB1 }}</span>
+      <span style="display:block;background:linear-gradient(to right,#ffac73 0%,#ff9564 25%,#6c5eff 60%,#00009b 95%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:10px">{{ t.heroB2 }}</span>
+    </h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:40px;align-items:end">
+      <p style="margin:0;font-size:clamp(18px,1.6vw,22px);line-height:1.5;color:#5B5B6B;max-width:600px;text-wrap:pretty">{{ t.heroSub }}</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start">
+        <a href="#waitlist" style="background:#2b00c6;color:#fff;border-radius:9999px;padding:18px 30px;font-weight:600;font-size:17px;display:flex;align-items:center;gap:10px" style-hover="background:#2200a0;color:#fff">{{ t.ctaPrimary }} <i class="ph-bold ph-arrow-right"></i></a>
+        <a href="#proof" style="border:2px solid #2b00c6;color:#2b00c6;border-radius:9999px;padding:16px 28px;font-weight:600;font-size:17px" style-hover="background:#EDEDFC;color:#2b00c6">{{ t.ctaSecondary }}</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:28px;border-top:1px solid #e8e8ea">
+      <sc-for list="{{ t.cliches }}" as="c" hint-placeholder-count="5">
+        <span style="border:1px solid #C5C5D8;color:#8a8a9a;border-radius:9999px;padding:10px 18px;font-size:15px;text-decoration:line-through;text-decoration-color:#ff9564;text-decoration-thickness:2px">{{ c }}</span>
+      </sc-for>
+      <i class="ph-bold ph-arrow-right" style="font-size:20px;color:#2b00c6;margin:0 4px"></i>
+      <span style="background:linear-gradient(to right,#ff9564,#6c5eff);color:#fff;border-radius:9999px;padding:11px 20px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px"><i class="ph-bold ph-seal-check"></i>{{ t.proofChip }}</span>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<section id="vision" data-screen-label="Vision" style="background:#EDEDFC">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:48px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#2b00c6">{{ t.visionLabel }}</div>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#5B5B6B;max-width:320px">{{ t.visionIntro }}</p>
+    </div>
+    <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column">
+      <sc-for list="{{ t.vision }}" as="v" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding:28px 0;border-top:1px solid #C5C5D8;align-items:baseline">
+          <div style="font:600 13px 'Spline Sans',sans-serif;letter-spacing:.08em;color:#ff9564">{{ v.n }}</div>
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(24px,2.9vw,40px);line-height:1.18;color:#0F0F4C;text-wrap:pretty">{{ v.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="functions" data-screen-label="Functions" style="background:#fff">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:56px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px 64px;align-items:end">
+      <h2 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(36px,4.6vw,68px);line-height:1.04;color:#0F0F4C;text-wrap:balance">{{ t.fnTitle }}</h2>
+      <p style="margin:0;font-size:18px;line-height:1.55;color:#5B5B6B;max-width:520px;text-wrap:pretty">{{ t.fnSub }}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px">
+      <sc-for list="{{ t.functions }}" as="f" hint-placeholder-count="6">
+        <div style="border:1px solid #e8e8ea;border-radius:24px;padding:30px;display:flex;flex-direction:column;gap:22px;min-height:290px;background:#fff;transition:all .25s;cursor:default" style-hover="border-color:#6c5eff;box-shadow:0 20px 50px rgba(43,0,198,0.12);transform:translateY(-4px)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+            <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(34px,3.4vw,46px);line-height:1;color:#0F0F4C">{{ f.name }}</div>
+            <div style="font:600 12px 'Spline Sans',sans-serif;color:#C5C5D8;letter-spacing:.06em">{{ f.n }}</div>
+          </div>
+          <div style="font-size:16px;font-weight:500;color:#4728ff">{{ f.role }}</div>
+          <div style="margin-top:auto;padding-top:18px;border-top:1px dashed #C5C5D8;display:flex;flex-direction:column;gap:8px">
+            <div style="font:600 10px 'Spline Sans',sans-serif;letter-spacing:.1em;color:#ff9564">{{ t.fnBriefLabel }}</div>
+            <div style="font-size:15px;line-height:1.45;color:#0F0F4C">{{ f.brief }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="how" data-screen-label="How it works" style="background:#0F0F4C;color:#fff;position:relative;overflow:hidden">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:64px;position:relative">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:880px">
+      <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#ffac73">{{ t.howLabel }}</div>
+      <h2 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(36px,4.6vw,68px);line-height:1.04;color:#fff;text-wrap:balance">{{ t.howTitle }}</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:40px 32px">
+      <sc-for list="{{ t.steps }}" as="s" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:16px;padding-top:24px;border-top:2px solid rgba(255,255,255,0.18)">
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:88px;line-height:.9;background:linear-gradient(to right,#ffac73,#6c5eff);-webkit-background-clip:text;background-clip:text;color:transparent">{{ s.n }}</div>
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:28px;color:#fff">{{ s.title }}</div>
+          <p style="margin:0;font-size:16px;line-height:1.55;color:#d4d4f5;text-wrap:pretty">{{ s.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="proof" data-screen-label="Proof showcase" style="background:#EDEDFC">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:48px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px 64px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#2b00c6">{{ t.proofLabel }}</div>
+        <h2 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(36px,4.6vw,68px);line-height:1.04;color:#0F0F4C;text-wrap:balance">{{ t.proofTitle }}</h2>
+      </div>
+      <p style="margin:0;font-size:18px;line-height:1.55;color:#5B5B6B;max-width:520px;text-wrap:pretty">{{ t.proofSub }}</p>
+    </div>
+
+    <div style="position:relative">
+    <div aria-hidden="true" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;align-items:start;filter:blur(7px);opacity:.7;pointer-events:none;user-select:none">
+      <div style="grid-column:span 2;min-width:0;background:#fff;border-radius:28px;box-shadow:0 30px 80px rgba(15,15,76,0.12);overflow:hidden;border:1px solid #e8e8ea">
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid #e8e8ea;background:#f8f8f9">
+          <div style="display:flex;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#e8e8ea"></span><span style="width:10px;height:10px;border-radius:50%;background:#e8e8ea"></span><span style="width:10px;height:10px;border-radius:50%;background:#e8e8ea"></span></div>
+          <div style="flex:1;min-width:0;background:#fff;border:1px solid #e8e8ea;border-radius:9999px;padding:6px 14px;font-size:12px;color:#5B5B6B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><i class="ph-bold ph-lock-simple" style="font-size:11px;margin-right:6px"></i>changepath.ai/proof/lena-w/ai-marketing-ops</div>
+        </div>
+        <div style="padding:clamp(24px,3vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:36px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(45deg,#ffac73,#00009b);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:24px">LW</div>
+            <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:26px;color:#0F0F4C">Lena W.</div>
+            <div style="font-size:15px;line-height:1.45;color:#5B5B6B">{{ t.mockFrom }} <i class="ph-bold ph-arrow-right" style="color:#ff9564"></i> <span style="color:#2b00c6;font-weight:600">{{ t.mockTo }}</span></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="background:linear-gradient(to right,#ff9564,#6c5eff);color:#fff;border-radius:9999px;padding:4px 12px;font:600 10px 'Spline Sans',sans-serif;letter-spacing:.06em">{{ t.mockMatch }}</span>
+              <span style="background:#f3f3f4;color:#0F0F4C;border-radius:9999px;padding:4px 12px;font:600 10px 'Spline Sans',sans-serif;letter-spacing:.06em">BERLIN · EN/DE</span>
+            </div>
+            <div style="font-size:13px;line-height:1.5;color:#5B5B6B;padding:14px;background:#f8f8f9;border-radius:14px">{{ t.mockFor }}</div>
+          </div>
+          <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column;gap:22px">
+            <sc-for list="{{ t.mockBlocks }}" as="b" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#2b00c6">{{ b.label }}</div>
+                <div style="font-size:16px;line-height:1.55;color:#0F0F4C;text-wrap:pretty">{{ b.text }}</div>
+              </div>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+              <sc-for list="{{ t.mockArtifacts }}" as="a" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="aspect-ratio:16/10;border-radius:14px;background:repeating-linear-gradient(135deg,#f3f3f4 0 8px,#EDEDFC 8px 16px);display:flex;align-items:center;justify-content:center;color:#6c5eff;font-size:22px"><i class="ph-bold {{ a.icon }}"></i></div>
+                  <div style="font-size:12px;color:#5B5B6B">{{ a.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px clamp(24px,3vw,40px);border-top:1px solid #e8e8ea;background:#f8f8f9">
+          <div style="display:flex;align-items:center;gap:8px;font:600 11px 'Spline Sans',sans-serif;letter-spacing:.06em;color:#5B5B6B"><i class="ph-bold ph-clock" style="font-size:14px"></i>{{ t.mockRead }}</div>
+          <sc-if value="{{ isEmployer }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:8px">
+              <span style="border:1.5px solid #C5C5D8;color:#5B5B6B;border-radius:9999px;padding:8px 16px;font-size:13px;font-weight:600">{{ t.mockPass }}</span>
+              <span style="background:#2b00c6;color:#fff;border-radius:9999px;padding:8px 18px;font-size:13px;font-weight:600;display:flex;gap:6px;align-items:center"><i class="ph-bold ph-calendar-check"></i>{{ t.mockInvite }}</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isTalent }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;gap:8px;font:600 11px 'Spline Sans',sans-serif;letter-spacing:.06em;color:#3ac0a0"><i class="ph-bold ph-eye" style="font-size:14px"></i>{{ t.mockOpened }}</div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <sc-for list="{{ t.miniProofs }}" as="m" hint-placeholder-count="2">
+          <div style="background:#fff;border-radius:24px;padding:26px;border:1px solid #e8e8ea;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:6px"><span style="background:#EDEDFC;color:#2b00c6;border-radius:9999px;padding:4px 12px;font:600 10px 'Spline Sans',sans-serif;letter-spacing:.06em">{{ m.fn }}</span></div>
+            <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:21px;line-height:1.25;color:#0F0F4C;text-wrap:pretty">{{ m.title }}</div>
+            <div style="font-size:14px;line-height:1.45;color:#4728ff">{{ m.who }}</div>
+            <div style="aspect-ratio:16/8;border-radius:14px;background:repeating-linear-gradient(135deg,#f3f3f4 0 8px,#EDEDFC 8px 16px)"></div>
+          </div>
+        </sc-for>
+        <div style="border-radius:24px;padding:26px;background:#2b00c6;color:#fff;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden">
+          <img src="assets/shapes.png" alt="" style="position:absolute;right:-40px;bottom:-60px;width:160px;opacity:.35;pointer-events:none">
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:21px;line-height:1.25;position:relative;text-wrap:pretty">{{ t.pitchLine }}</div>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="width:min(560px,100%);background:#0F0F4C;color:#fff;border-radius:28px;padding:clamp(28px,4vw,44px);box-shadow:0 40px 100px rgba(15,15,76,0.35);display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden">
+        <img src="assets/shapes.png" alt="" style="position:absolute;right:-50px;top:-60px;width:200px;opacity:.25;pointer-events:none">
+        <div style="display:flex;align-items:center;gap:10px;position:relative">
+          <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(to right,#ff9564,#6c5eff);display:flex;align-items:center;justify-content:center;font-size:18px"><i class="ph-bold ph-lock-simple"></i></span>
+          <span style="font:600 11px 'Spline Sans',sans-serif;letter-spacing:.12em;color:#ffac73">{{ t.betaBadge }}</span>
+        </div>
+        <p style="margin:0;font-size:18px;line-height:1.55;color:#d4d4f5;position:relative;text-wrap:pretty">{{ t.betaBody }}</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;position:relative">
+          <a href="#waitlist" style="background:#fff;color:#2b00c6;border-radius:9999px;padding:15px 24px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px" style-hover="background:#EDEDFC;color:#2b00c6">{{ t.navCta }} <i class="ph-bold ph-arrow-right"></i></a>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:18px;border-top:1px solid rgba(255,255,255,0.16);position:relative">
+          <span style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:18px;color:#fff">{{ t.betaCantWait }}</span>
+          <a href="https://www.linkedin.com/" target="_blank" style="border:1.5px solid rgba(255,255,255,0.45);color:#fff;border-radius:9999px;padding:11px 20px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px" style-hover="border-color:#fff;color:#fff"><i class="ph-bold ph-linkedin-logo"></i>{{ t.betaDm }}</a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Why now" style="background:#fff">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:56px">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:900px">
+      <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#2b00c6">{{ t.statsLabel }}</div>
+      <h2 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(36px,4.6vw,68px);line-height:1.04;color:#0F0F4C;text-wrap:balance">{{ t.statsTitle }}</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:0;border-top:1px solid #e8e8ea">
+      <sc-for list="{{ t.stats }}" as="s" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:14px;padding:32px 28px 32px 0;border-bottom:1px solid #e8e8ea">
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(64px,7vw,104px);line-height:.95;background:linear-gradient(to right,#ff9564,#6c5eff);-webkit-background-clip:text;background-clip:text;color:transparent;width:fit-content;padding-bottom:4px">{{ s.num }}</div>
+          <div style="font-size:16px;line-height:1.5;color:#0F0F4C;text-wrap:pretty">{{ s.text }}</div>
+          <div style="font:600 10px 'Spline Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8a8a9a">{{ s.src }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <figure style="margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:start;max-width:1040px">
+      <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:120px;line-height:.8;color:#ff9564">“</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <blockquote style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(26px,3vw,42px);line-height:1.2;color:#0F0F4C;text-wrap:pretty">{{ t.quote }}</blockquote>
+        <figcaption style="font:600 12px 'Spline Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#5B5B6B">{{ t.quoteBy }}</figcaption>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section id="faq" data-screen-label="FAQ" style="background:#f8f8f9;border-top:1px solid #e8e8ea">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:48px">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#2b00c6">FAQ</div>
+      <h2 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(32px,3.6vw,52px);line-height:1.06;color:#0F0F4C">{{ t.faqTitle }}</h2>
+    </div>
+    <div style="grid-column:span 2;min-width:0;display:flex;flex-direction:column">
+      <sc-for list="{{ faqItems }}" as="q" hint-placeholder-count="5">
+        <div style="border-top:1px solid #C5C5D8">
+          <button onClick="{{ q.toggle }}" style="width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:26px 0;text-align:left;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(19px,1.8vw,24px);color:#0F0F4C">
+            <span>{{ q.q }}</span>
+            <span style="flex:none;width:40px;height:40px;border-radius:50%;background:{{ q.iconBg }};color:{{ q.iconFg }};display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s"><i class="ph-bold {{ q.icon }}"></i></span>
+          </button>
+          <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0;padding:0 64px 28px 0;font-size:17px;line-height:1.6;color:#5B5B6B;text-wrap:pretty">{{ q.a }}</p>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="waitlist" data-screen-label="Waitlist" style="background:#0F0F4C;color:#fff;position:relative;overflow:hidden">
+  <img src="assets/shapes.png" alt="" style="position:absolute;left:-120px;bottom:-160px;width:520px;opacity:.18;pointer-events:none">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px;align-items:center;position:relative">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#ffac73">{{ t.formLabel }}</div>
+      <h2 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(40px,5.4vw,80px);line-height:1.02;color:#fff;text-wrap:balance">{{ t.formTitle }}</h2>
+      <p style="margin:0;font-size:19px;line-height:1.55;color:#d4d4f5;max-width:500px;text-wrap:pretty">{{ t.formSub }}</p>
+    </div>
+    <div style="background:#fff;border-radius:28px;padding:clamp(24px,3vw,40px);color:#0F0F4C;box-shadow:0 40px 100px rgba(0,0,0,0.35)">
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ t.fields }}" as="fd" hint-placeholder-count="4">
+            <label style="display:flex;flex-direction:column;gap:8px">
+              <span style="font:600 12px 'Spline Sans',sans-serif;letter-spacing:.04em;color:#0F0F4C">{{ fd.label }}</span>
+              <input type="{{ fd.type }}" placeholder="{{ fd.ph }}" required="{{ fd.req }}" style="border:1px solid #C5C5D8;border-radius:14px;padding:15px 16px;font:400 16px 'Spline Sans',sans-serif;color:#0F0F4C;outline:none;background:#fff" style-focus="border-color:#2b00c6;box-shadow:0 0 0 3px #EDEDFC">
+            </label>
+          </sc-for>
+          <sc-if value="{{ isTalent }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font:600 12px 'Spline Sans',sans-serif;letter-spacing:.04em;color:#0F0F4C">{{ t.chipLabel }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ fnChips }}" as="ch" hint-placeholder-count="7">
+                  <button type="button" onClick="{{ ch.toggle }}" style="cursor:pointer;border-radius:9999px;padding:9px 16px;font:500 14px 'Spline Sans',sans-serif;border:1.5px solid {{ ch.bd }};background:{{ ch.bg }};color:{{ ch.fg }};transition:all .15s">{{ ch.name }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <button type="submit" style="margin-top:8px;background:#2b00c6;color:#fff;border:none;border-radius:9999px;padding:18px 28px;font:600 17px 'Spline Sans',sans-serif;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:10px" style-hover="background:#2200a0">{{ t.formCta }} <i class="ph-bold ph-arrow-right"></i></button>
+          <div style="font-size:12px;line-height:1.5;color:#5B5B6B;text-align:center">{{ t.formFine }}</div>
+        </form>
+      </sc-if>
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:20px 0">
+          <div style="width:64px;height:64px;border-radius:50%;background:#3ac0a0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px"><i class="ph-bold ph-check"></i></div>
+          <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:30px;line-height:1.15">{{ t.doneTitle }}</div>
+          <p style="margin:0;font-size:17px;line-height:1.55;color:#5B5B6B">{{ t.doneBody }}</p>
+          <button onClick="{{ reset }}" style="background:none;border:none;padding:0;cursor:pointer;color:#2b00c6;font:600 15px 'Spline Sans',sans-serif">{{ t.doneAgain }}</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0F0F4C;color:#d4d4f5;border-top:1px solid rgba(255,255,255,0.12)">
+  <div style="max-width:1280px;margin:0 auto;padding:28px clamp(20px,4vw,56px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px">
+    <div style="display:flex;align-items:center;gap:14px"><span style="font-family:'Galano Classic',sans-serif;font-weight:600;color:#fff;font-size:16px">ChangePath</span><span>©2026</span></div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <a href="#" style="color:#d4d4f5" style-hover="color:#fff">LinkedIn</a>
+      <a href="#" style="color:#d4d4f5" style-hover="color:#fff">{{ t.imprint }}</a>
+      <a href="#" style="color:#d4d4f5" style-hover="color:#fff">{{ t.privacy }}</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;hero&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pile&quot;,&quot;manifesto&quot;],&quot;default&quot;:&quot;pile&quot;,&quot;tsType&quot;:&quot;'pile'|'manifesto'&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;audience&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;talent&quot;,&quot;employers&quot;],&quot;default&quot;:&quot;talent&quot;,&quot;tsType&quot;:&quot;'talent'|'employers'&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;de&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'de'&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+const FN = {
+  en: [
+    ['Product', 'AI Product Manager', 'Spec an AI feature from PRD to eval plan & LLM cost calculations.'],
+    ['Design', 'AI-Augmented Product Designer', 'Prototype an onboarding flow end-to-end and get feedback from a synthetic audience.'],
+    ['Marketing', 'AI Marketing Ops Lead', 'Create a content pipeline that builds a brand\'s visibility in LLM responses.'],
+    ['Sales', 'Sales Ops Manager, AI processes', 'Create a sales pipeline, enrigh the contacts and automate cold outreach for an ICP.'],
+    ['Legal', 'Legal Ops & AI Counsel', 'Create an AI-assisted contract-review tool for sales teams to create client offers.'],
+    ['Finance', 'AI Finance & Controlling Lead', 'Create a yearly financial plan with 3 scenarios and ship a month-end variance explainer for leadership.']
+  ],
+  de: [
+    ['Product', 'AI Product Manager', 'Ein KI-Feature aus einer echten Anzeige spezifizieren – PRD, Evaluierung, Rollout.'],
+    ['Design', 'KI-gestützte:r Product Designer:in', 'Einen Onboarding-Flow komplett mit generativen Tools prototypen.'],
+    ['Marketing', 'AI Marketing Ops Lead', 'Einen Launch-Workflow mit Agenten und menschlicher Prüfung neu bauen.'],
+    ['Sales', 'Sales Ops Manager:in, KI-Prozesse', 'Account-Recherche für ein Zielsegment automatisieren.'],
+    ['Legal', 'Legal Ops & AI Counsel', 'Ein KI-gestütztes Playbook für die Prüfung von Lieferanten-NDAs entwerfen.'],
+    ['Finance', 'AI Finance & Controlling Lead', 'Einen Abweichungs-Erklärer für den Monatsabschluss bauen.']
+  ]
+};
+
+const STATS = {
+  en: {
+    a: { num: '288', text: 'job titles with "AI" in the name in Germany in Q1 2026 — up from 72 in 2022.', src: 'Indeed Hiring Lab, 2026' },
+    b: { num: '59%', text: 'of those AI-touched roles sit outside tech.', src: 'Indeed Hiring Lab, 2026' },
+    c: { num: '67%', text: 'of hiring managers say AI-generated applications have slowed hiring down.', src: 'Robert Half UK, Jun 2026' },
+    d: { num: '85%', text: 'of German firms not yet using AI say they lack the know-how to bring it in.', src: 'Bitkom, Sep 2026' }
+  },
+  de: {
+    a: { num: '288', text: 'Jobtitel mit „KI“ im Namen gab es in Deutschland im Q1 2026 – 2022 waren es 72.', src: 'Indeed Hiring Lab, 2026' },
+    b: { num: '59%', text: 'dieser KI-Rollen liegen außerhalb der Tech-Branche.', src: 'Indeed Hiring Lab, 2026' },
+    c: { num: '67%', text: 'der Hiring Manager sagen: KI-generierte Bewerbungen verlangsamen die Einstellung.', src: 'Robert Half UK, Jun 2026' },
+    d: { num: '85%', text: 'der deutschen Firmen ohne KI nennen fehlendes Know-how als Grund.', src: 'Bitkom, Sep 2026' }
+  }
+};
+
+const COPY = {
+  en: {
+    shared: {
+      navVision: 'Vision', navFunctions: 'Functions', navHow: 'How it works', navProof: 'Proof', navFaq: 'FAQ',
+      forTalent: 'For talent', forEmployers: 'For employers', navCta: 'Join the waitlist',
+      badgeProof: 'PROOF OF WORK', fnBriefLabel: 'SAMPLE PROOF BRIEF', howLabel: 'How it works', proofLabel: 'Closed beta', betaBadge: 'CLOSED BETA · INVITE ONLY', betaCantWait: 'Can’t wait?', betaDm: 'DM our founder', statsLabel: 'Why now',
+      mockFrom: 'Senior Marketing Manager', mockTo: 'AI Marketing Ops Lead', mockMatch: '87% MATCH',
+      mockFor: 'Built for: AI Marketing Ops Lead at a Berlin scale-up. Brief derived from the live posting.',
+      mockBlocks: [
+        { label: 'The task', text: 'Cut the time from product launch to a localised campaign kit in DE, EN and FR.' },
+        { label: 'How I used AI', text: 'A Claude + Make workflow that drafts the brief, localises copy and flags brand-voice risks for human review.' },
+        { label: 'Result', text: 'Launch kit in 3 hours instead of 4 days. Workflow, prompt library and walkthrough attached.' }
+      ],
+      mockArtifacts: [{ icon: 'ph-play-circle', label: 'Walkthrough · 3:40' }, { icon: 'ph-flow-arrow', label: 'Workflow map' }, { icon: 'ph-files', label: 'Prompt library' }],
+      mockRead: '4 MIN REVIEW', mockOpened: 'OPENED BY HIRING MANAGER', mockPass: 'Pass', mockInvite: 'Invite to interview',
+      miniProofs: [
+        { fn: 'LEGAL', title: 'Clause-risk triage for supplier contracts', who: 'In-house counsel → Legal Ops & AI' },
+        { fn: 'FINANCE', title: 'Month-end variance explainer for the leadership pack', who: 'Senior controller → AI Finance Lead' }
+      ],
+      pitchLine: 'The certificate shows you can use AI. The ChangePath project shows you can do the job with it.',
+      faqTitle: 'Questions, answered.', imprint: 'Imprint', privacy: 'Privacy',
+      doneAgain: 'Submit another', cliche: 'Results-driven professional with a passion for leveraging AI to drive innovation and deliver impact across cross-functional teams.'
+    },
+    talent: {
+      eyebrow: 'AI-FLUENT TALENT · OUTSIDE TECH · DACH',
+      heroA1: 'Every AI-written CV looks the same.', heroA2: 'Your work doesn’t.',
+      heroB1: 'CVs are free now.', heroB2: 'Proof isn’t.',
+      heroSub: 'ChangePath turns real job postings into short proof-of-work projects, so hiring managers see what you can do with AI in your field — product, design, marketing, sales, legal or finance.',
+      ctaPrimary: 'Join the waitlist', ctaSecondary: 'See a proof page',
+      pileTag: 'YOU + 311 OTHER APPLICANTS', pileFn: 'FINANCE',
+      pileTitle: 'AI-assisted pricing review, built from the posting itself', pileWho: 'Controller → AI Finance & Controlling Lead', pileMeta: 'OPENED BY HIRING MANAGER · 2 MIN',
+      cliches: ['Results-driven', 'Passionate about AI', 'Proven track record', 'Cross-functional team player', 'Leveraging cutting-edge tools'],
+      proofChip: 'A proof page they actually open',
+      visionLabel: 'Our vision', visionIntro: 'You have a decade of expertise. AI just made it harder to see. We make it impossible to miss.',
+      vision: ['The CV is dead. Proof of work is the new signal.', 'Your domain expertise is your edge. AI makes it sharper, not obsolete.', 'Fewer applications. Stronger signal. Verified by humans.'],
+      fnTitle: 'Your field. Now AI-augmented.', fnSub: 'We don’t push you into tech. We help you take your expertise and supercharge it with AI.',
+      howTitle: 'From job posting to proof in minutes, not months.',
+      steps: [
+        ['Match', 'Upload your CV. We map your transferable skills to AI-augmented roles in your field that are hiring right now.'],
+        ['Brief', 'For every role, a proof brief: a small project derived from the real posting and your skill gaps. We take you by the hand.'],
+        ['Prove', 'Build it with AI. Get a shareable proof page a hiring manager can review in minutes.'],
+        ['Apply', 'Link it in your application or LinkedIn message. Fewer applications, more replies.']
+      ],
+      proofTitle: 'Curious what a proof-of-work portfolio looks like?', proofSub: 'So is everyone else on the list. We’re in closed beta and only a handful of professionals have one yet.', betaBody: 'Sign up to the list and we’ll update you as soon as we’re live. Early sign-ups get the first spots.',
+      statsTitle: 'The roles exist. A CV just can’t show you fit them.', statKeys: ['a', 'b', 'c', 'd'],
+      quote: 'How can I get a human to look at my application in the first place?', quoteBy: 'Asked in every user interview we ran',
+      faq: [
+        ['Is this a course or a bootcamp?', 'No. No cohorts, no six-month curriculum. One proof project per role you actually want, sized for days, not months.'],
+        ['I’m not in tech. Is this for me?', 'That’s exactly who it’s for. Product, design, marketing, sales, legal and finance professionals who want to take AI into their own field.'],
+        ['How long does a proof project take?', 'Most briefs are designed to be finished in a few focused days with AI. We’re calibrating the right size with our first users.'],
+        ['Do I need to speak German?', 'No. We’re DACH-native and English-friendly, and we match you to roles that fit your languages.'],
+        ['What does it cost?', 'Early access is free during our pilot. Waitlist members hear about pricing first.']
+      ],
+      formLabel: 'Early access', formTitle: 'Stop sending CVs into the void.', formSub: 'Join the waitlist. We’re onboarding our first cohort of AI-fluent professionals in DACH this quarter.',
+      fields: [
+        { label: 'Full name', ph: 'Lena Weber', type: 'text', req: true },
+        { label: 'Email', ph: 'lena@email.com', type: 'email', req: true },
+        { label: 'LinkedIn profile', ph: 'linkedin.com/in/…', type: 'url', req: false }
+      ],
+      chipLabel: 'Your function', formCta: 'Join the waitlist', formFine: 'No spam. We’ll only email you about early access.',
+      doneTitle: 'You’re on the list.', doneBody: 'We’ll be in touch as soon as your cohort opens. Start thinking about the one role you’d love to prove yourself for.'
+    },
+    employers: {
+      eyebrow: 'FOR HIRING TEAMS · KMU & SCALE-UPS · DACH',
+      heroA1: '300 applications. All the same.', heroA2: 'Meet the three who did the work.',
+      heroB1: 'Stop reading CVs.', heroB2: 'Start reviewing proof.',
+      heroSub: 'We don’t drown you in hundreds of applications per role. We bring you AI-fluent domain experts who apply with proof of work — not a generic CV.',
+      ctaPrimary: 'Request pilot access', ctaSecondary: 'See a proof page',
+      pileTag: '312 APPLICATIONS · 1 ROLE', pileFn: 'SHORTLIST · 3 OF 312',
+      pileTitle: 'Already did a piece of the job — with AI', pileWho: 'Role-specific work sample · ready before interview #1', pileMeta: 'REVIEW IN 2 MIN · NOT 2 WEEKS',
+      cliches: ['Results-driven', 'Passionate about AI', 'Proven track record', 'Cross-functional team player', 'Leveraging cutting-edge tools'],
+      proofChip: 'Evidence, before the first call',
+      visionLabel: 'Our vision', visionIntro: 'AI made applications free to produce. We make the signal scarce again.',
+      vision: ['Hiring shouldn’t start with 300 identical CVs.', 'AI fluency is proven by doing — not by badges or keywords.', 'Domain experts who bring AI into your function, not developers you have to translate for.', 'Starting in DACH. For KMUs and scale-ups alike.'],
+      fnTitle: 'AI fluency, in every function.', fnSub: 'Talent that already applies AI where your business actually runs — not in a separate lab.',
+      howTitle: 'Screening that starts from evidence.',
+      steps: [
+        ['Share a role', 'Send us one posting. No new ATS, no setup, no lengthy intake.'],
+        ['We brief', 'We turn it into a role-specific work sample — the take-home task your team never has time to design.'],
+        ['They prove', 'Experienced, AI-fluent domain experts complete it and publish a proof page.'],
+        ['You review', 'A short list of proof pages, not a pile of CVs. Two minutes each.']
+      ],
+      proofTitle: 'Curious what a proof page looks like for your role?', proofSub: 'We’re in closed beta with a small group of DACH hiring teams. Pilot spots are limited.', betaBody: 'Sign up to the list and we’ll update you as soon as we’re live. Early sign-ups get first access to pilot spots.',
+      statsTitle: 'The flood is real. So is the skills gap.', statKeys: ['c', 'd', 'a', 'b'],
+      quote: 'Job-specific methods like work samples predict performance better than general measures.', quoteBy: 'Sackett et al., 2022 — Journal of Applied Psychology',
+      faq: [
+        ['Is ChangePath a recruiting agency?', 'Not a classic one. We don’t forward CVs. We introduce candidates who’ve already done a piece of the job, with AI.'],
+        ['Do we have to design the task?', 'No. We derive the proof brief from your posting. You can review and adjust it before it goes out.'],
+        ['Who are the candidates?', 'Experienced professionals with strong track records in their function — product, design, marketing, sales, legal, finance — who now apply AI in it.'],
+        ['What does a pilot cost?', 'We’re running pilots with a small group of DACH companies this quarter. Pilot partners help shape pricing.'],
+        ['German or English?', 'Both. Tell us the working language of the role and we match accordingly.']
+      ],
+      formLabel: 'Pilot partners', formTitle: 'Hire on proof, not on promises.', formSub: 'Share one open role. Get a shortlist of proof pages from AI-fluent domain experts — in weeks, not months.',
+      fields: [
+        { label: 'Full name', ph: 'Jonas Becker', type: 'text', req: true },
+        { label: 'Work email', ph: 'jonas@company.de', type: 'email', req: true },
+        { label: 'Company', ph: 'Company GmbH', type: 'text', req: true },
+        { label: 'Role you’re hiring for', ph: 'e.g. Sales Ops Manager, AI processes', type: 'text', req: false }
+      ],
+      formCta: 'Request pilot access', formFine: 'We’ll reply within two business days.',
+      doneTitle: 'Thanks — we’ll be in touch.', doneBody: 'Expect a short note from our founders within two business days to scope your first role.'
+    }
+  },
+  de: {
+    shared: {
+      navVision: 'Vision', navFunctions: 'Bereiche', navHow: 'So funktioniert’s', navProof: 'Proof', navFaq: 'FAQ',
+      forTalent: 'Für Talente', forEmployers: 'Für Unternehmen', navCta: 'Zur Warteliste',
+      badgeProof: 'PROOF OF WORK', fnBriefLabel: 'BEISPIEL-PROOF-BRIEF', howLabel: 'So funktioniert’s', proofLabel: 'Closed Beta', betaBadge: 'CLOSED BETA · NUR AUF EINLADUNG', betaCantWait: 'Keine Geduld?', betaDm: 'Schreib unserer Gründerin', statsLabel: 'Warum jetzt',
+      mockFrom: 'Senior Marketing Manager', mockTo: 'AI Marketing Ops Lead', mockMatch: '87% MATCH',
+      mockFor: 'Erstellt für: AI Marketing Ops Lead bei einem Berliner Scale-up. Brief abgeleitet aus der echten Anzeige.',
+      mockBlocks: [
+        { label: 'Die Aufgabe', text: 'Die Zeit vom Produktlaunch bis zum lokalisierten Kampagnen-Kit (DE, EN, FR) verkürzen.' },
+        { label: 'So habe ich KI eingesetzt', text: 'Ein Claude + Make-Workflow, der das Briefing entwirft, Texte lokalisiert und Brand-Voice-Risiken zur menschlichen Prüfung markiert.' },
+        { label: 'Ergebnis', text: 'Launch-Kit in 3 Stunden statt 4 Tagen. Workflow, Prompt-Bibliothek und Walkthrough im Anhang.' }
+      ],
+      mockArtifacts: [{ icon: 'ph-play-circle', label: 'Walkthrough · 3:40' }, { icon: 'ph-flow-arrow', label: 'Workflow-Map' }, { icon: 'ph-files', label: 'Prompt-Bibliothek' }],
+      mockRead: '4 MIN PRÜFZEIT', mockOpened: 'VOM HIRING MANAGER GEÖFFNET', mockPass: 'Absagen', mockInvite: 'Zum Interview einladen',
+      miniProofs: [
+        { fn: 'LEGAL', title: 'Klausel-Risiko-Triage für Lieferantenverträge', who: 'Syndikusanwältin → Legal Ops & AI' },
+        { fn: 'FINANCE', title: 'Abweichungs-Erklärer für den Monatsabschluss', who: 'Senior Controller → AI Finance Lead' }
+      ],
+      pitchLine: 'Das Zertifikat zeigt, dass du KI nutzen kannst. Das ChangePath-Projekt zeigt, dass du den Job damit machen kannst.',
+      faqTitle: 'Fragen & Antworten.', imprint: 'Impressum', privacy: 'Datenschutz',
+      doneAgain: 'Weitere Anfrage senden', cliche: 'Ergebnisorientierte Fachkraft mit Leidenschaft dafür, KI für Innovation und messbaren Impact in cross-funktionalen Teams einzusetzen.'
+    },
+    talent: {
+      eyebrow: 'KI-AFFINE TALENTE · AUSSERHALB DER TECH · DACH',
+      heroA1: 'Jeder KI-Lebenslauf sieht gleich aus.', heroA2: 'Deine Arbeit nicht.',
+      heroB1: 'Lebensläufe sind gratis.', heroB2: 'Beweise nicht.',
+      heroSub: 'ChangePath macht aus echten Stellenanzeigen kurze Proof-of-Work-Projekte. So sehen Hiring Manager, was du in deinem Fach mit KI kannst – in Product, Design, Marketing, Sales, Legal oder Finance.',
+      ctaPrimary: 'Zur Warteliste', ctaSecondary: 'Proof-Seite ansehen',
+      pileTag: 'DU + 311 WEITERE BEWERBUNGEN', pileFn: 'FINANCE',
+      pileTitle: 'KI-gestützte Preisanalyse, direkt aus der Anzeige gebaut', pileWho: 'Controller → AI Finance & Controlling Lead', pileMeta: 'VOM HIRING MANAGER GEÖFFNET · 2 MIN',
+      cliches: ['Ergebnisorientiert', 'Leidenschaft für KI', 'Nachweisliche Erfolge', 'Teamplayer', 'Innovative Tools'],
+      proofChip: 'Eine Proof-Seite, die wirklich geöffnet wird',
+      visionLabel: 'Unsere Vision', visionIntro: 'Du hast zehn Jahre Expertise. KI hat sie nur schwerer sichtbar gemacht. Wir machen sie unübersehbar.',
+      vision: ['Der Lebenslauf hat ausgedient. Beweise sind das neue Signal.', 'Deine Fachexpertise ist dein Vorsprung – KI macht sie lauter, nicht überflüssig.', 'Weniger Bewerbungen. Stärkeres Signal. Ein Mensch schaut wirklich hin.'],
+      fnTitle: 'Dein Fach. Jetzt mit KI.', fnSub: 'Wir drängen dich nicht in die Tech. Wir helfen dir, KI in die Arbeit zu bringen, die du schon kennst – und es bei Rollen zu beweisen, die jetzt besetzt werden.',
+      howTitle: 'Von der Anzeige zum Beweis – in Tagen, nicht Monaten.',
+      steps: [
+        ['Match', 'Lade deinen Lebenslauf hoch. Wir übersetzen deine Skills in KI-gestützte Rollen in deinem Fach, die gerade ausgeschrieben sind.'],
+        ['Brief', 'Für jede Rolle ein Proof-Brief: ein kleines Projekt aus der echten Anzeige und deinen Skill-Lücken. Wir nehmen dich an die Hand.'],
+        ['Beweis', 'Bau es in wenigen Tagen mit KI. Du bekommst eine Proof-Seite, die ein Hiring Manager in zwei Minuten prüft.'],
+        ['Bewerben', 'Verlinke sie in deiner Bewerbung oder LinkedIn-Nachricht. Weniger Bewerbungen, mehr Antworten.']
+      ],
+      proofTitle: 'Neugierig, wie ein Proof-of-Work-Portfolio aussieht?', proofSub: 'Damit bist du nicht allein. Wir sind in der Closed Beta – erst eine Handvoll Fachleute hat schon eins.', betaBody: 'Trag dich in die Liste ein und wir melden uns, sobald wir live sind. Wer früh dabei ist, bekommt die ersten Plätze.',
+      statsTitle: 'Die Rollen gibt es. Ein Lebenslauf zeigt nur nicht, dass du passt.', statKeys: ['a', 'b', 'c', 'd'],
+      quote: 'Wie bringe ich überhaupt einen Menschen dazu, sich meine Bewerbung anzusehen?', quoteBy: 'Gefragt in jedem unserer Nutzerinterviews',
+      faq: [
+        ['Ist das ein Kurs oder Bootcamp?', 'Nein. Keine Kohorten, kein Sechs-Monats-Curriculum. Ein Proof-Projekt pro Wunschrolle – in Tagen, nicht Monaten.'],
+        ['Ich komme nicht aus der Tech. Passt das?', 'Genau dafür ist es gemacht: für Fachleute aus Product, Design, Marketing, Sales, Legal und Finance, die KI in ihr eigenes Fach bringen wollen.'],
+        ['Wie lange dauert ein Proof-Projekt?', 'Die meisten Briefs sind auf wenige fokussierte Tage mit KI ausgelegt. Die ideale Größe kalibrieren wir mit unseren ersten Nutzer:innen.'],
+        ['Muss ich Deutsch sprechen?', 'Nein. Wir sind in DACH zu Hause und englischfreundlich – wir matchen dich mit Rollen, die zu deinen Sprachen passen.'],
+        ['Was kostet das?', 'Early Access ist während unseres Piloten kostenlos. Wer auf der Warteliste steht, erfährt Preise zuerst.']
+      ],
+      formLabel: 'Early Access', formTitle: 'Schluss mit Bewerbungen ins Leere.', formSub: 'Komm auf die Warteliste. Wir nehmen in diesem Quartal die erste Kohorte KI-affiner Fachleute in DACH auf.',
+      fields: [
+        { label: 'Vollständiger Name', ph: 'Lena Weber', type: 'text', req: true },
+        { label: 'E-Mail', ph: 'lena@email.de', type: 'email', req: true },
+        { label: 'LinkedIn-Profil', ph: 'linkedin.com/in/…', type: 'url', req: false }
+      ],
+      chipLabel: 'Dein Bereich', formCta: 'Zur Warteliste', formFine: 'Kein Spam. Wir schreiben dir nur zum Early Access.',
+      doneTitle: 'Du bist auf der Liste.', doneBody: 'Wir melden uns, sobald deine Kohorte startet. Überleg dir schon mal die eine Rolle, für die du dich beweisen willst.'
+    },
+    employers: {
+      eyebrow: 'FÜR HIRING TEAMS · KMU & SCALE-UPS · DACH',
+      heroA1: '300 Bewerbungen. Alle gleich.', heroA2: 'Lernen Sie die drei kennen, die geliefert haben.',
+      heroB1: 'Schluss mit Lebensläufen.', heroB2: 'Prüfen Sie Beweise.',
+      heroSub: 'Wir überfluten Sie nicht mit Hunderten Bewerbungen pro Stelle. Wir bringen Ihnen KI-versierte Fachexpert:innen, die sich mit einer Arbeitsprobe bewerben – nicht mit einem generischen Lebenslauf.',
+      ctaPrimary: 'Pilotzugang anfragen', ctaSecondary: 'Proof-Seite ansehen',
+      pileTag: '312 BEWERBUNGEN · 1 STELLE', pileFn: 'SHORTLIST · 3 VON 312',
+      pileTitle: 'Hat schon ein Stück des Jobs erledigt – mit KI', pileWho: 'Rollenspezifische Arbeitsprobe · vor dem ersten Interview', pileMeta: 'PRÜFEN IN 2 MIN · NICHT 2 WOCHEN',
+      cliches: ['Ergebnisorientiert', 'Leidenschaft für KI', 'Nachweisliche Erfolge', 'Teamplayer', 'Innovative Tools'],
+      proofChip: 'Belege vor dem ersten Gespräch',
+      visionLabel: 'Unsere Vision', visionIntro: 'KI hat Bewerbungen kostenlos gemacht. Wir machen das Signal wieder knapp.',
+      vision: ['Recruiting sollte nicht mit 300 identischen Lebensläufen beginnen.', 'KI-Kompetenz beweist man durch Tun – nicht durch Badges oder Keywords.', 'Fachexpert:innen, die KI in Ihren Bereich bringen – keine Entwickler, die Sie erst übersetzen müssen.', 'Wir starten in DACH. Für KMU und Scale-ups.'],
+      fnTitle: 'KI-Kompetenz in jedem Bereich.', fnSub: 'Talente, die KI schon dort einsetzen, wo Ihr Geschäft wirklich läuft – nicht in einem separaten Lab.',
+      howTitle: 'Screening, das mit Belegen beginnt.',
+      steps: [
+        ['Stelle teilen', 'Schicken Sie uns eine Anzeige. Kein neues ATS, kein Setup, kein langes Intake.'],
+        ['Wir briefen', 'Wir machen daraus eine rollenspezifische Arbeitsprobe – die Aufgabe, für die Ihr Team nie Zeit hat.'],
+        ['Sie liefern', 'Erfahrene, KI-versierte Fachexpert:innen lösen sie und veröffentlichen eine Proof-Seite.'],
+        ['Sie prüfen', 'Eine kurze Liste von Proof-Seiten statt eines CV-Stapels. Zwei Minuten pro Person.']
+      ],
+      proofTitle: 'Neugierig, wie eine Proof-Seite für Ihre Rolle aussieht?', proofSub: 'Wir sind in der Closed Beta mit einer kleinen Gruppe von Hiring Teams in DACH. Pilotplätze sind begrenzt.', betaBody: 'Tragen Sie sich ein und wir melden uns, sobald wir live sind. Frühe Anmeldungen erhalten zuerst Zugang zu Pilotplätzen.',
+      statsTitle: 'Die Bewerbungsflut ist real. Die Kompetenzlücke auch.', statKeys: ['c', 'd', 'a', 'b'],
+      quote: 'Jobspezifische Methoden wie Arbeitsproben sagen Leistung besser vorher als allgemeine Verfahren.', quoteBy: 'Sackett et al., 2022 — Journal of Applied Psychology',
+      faq: [
+        ['Ist ChangePath eine Personalberatung?', 'Keine klassische. Wir leiten keine Lebensläufe weiter. Wir stellen Ihnen Menschen vor, die schon ein Stück des Jobs erledigt haben – mit KI.'],
+        ['Müssen wir die Aufgabe selbst entwickeln?', 'Nein. Wir leiten den Proof-Brief aus Ihrer Anzeige ab. Sie können ihn vorab prüfen und anpassen.'],
+        ['Wer sind die Kandidat:innen?', 'Erfahrene Fachleute mit starker Bilanz in ihrem Bereich – Product, Design, Marketing, Sales, Legal, Finance –, die dort heute KI einsetzen.'],
+        ['Was kostet ein Pilot?', 'Wir führen dieses Quartal Piloten mit einer kleinen Gruppe von DACH-Unternehmen durch. Pilotpartner gestalten das Pricing mit.'],
+        ['Deutsch oder Englisch?', 'Beides. Nennen Sie uns die Arbeitssprache der Rolle, wir matchen entsprechend.']
+      ],
+      formLabel: 'Pilotpartner', formTitle: 'Einstellen auf Basis von Beweisen.', formSub: 'Teilen Sie eine offene Stelle. Erhalten Sie eine Shortlist von Proof-Seiten KI-versierter Fachexpert:innen – in Wochen, nicht Monaten.',
+      fields: [
+        { label: 'Vollständiger Name', ph: 'Jonas Becker', type: 'text', req: true },
+        { label: 'Geschäftliche E-Mail', ph: 'jonas@firma.de', type: 'email', req: true },
+        { label: 'Unternehmen', ph: 'Firma GmbH', type: 'text', req: true },
+        { label: 'Zu besetzende Rolle', ph: 'z. B. Sales Ops Manager:in, KI-Prozesse', type: 'text', req: false }
+      ],
+      formCta: 'Pilotzugang anfragen', formFine: 'Wir antworten innerhalb von zwei Werktagen.',
+      doneTitle: 'Danke – wir melden uns.', doneBody: 'Sie hören innerhalb von zwei Werktagen von unseren Gründer:innen, um Ihre erste Rolle zu besprechen.'
+    }
+  }
+};
+
+class Component extends DCLogic {
+  state = {
+    audience: this.props.audience ?? 'talent',
+    lang: this.props.lang ?? 'en',
+    openFaq: 0,
+    chips: {},
+    submitted: false
+  };
+
+  componentDidUpdate(prev) {
+    if (prev.audience !== this.props.audience && this.props.audience) this.setState({ audience: this.props.audience, submitted: false, openFaq: 0 });
+    if (prev.lang !== this.props.lang && this.props.lang) this.setState({ lang: this.props.lang });
+  }
+
+  renderVals() {
+    const { audience, lang, openFaq, chips, submitted } = this.state;
+    const L = COPY[lang];
+    const A = L[audience];
+    const pad = i => '0' + (i + 1);
+    const t = {
+      ...L.shared, ...A,
+      vision: A.vision.map((text, i) => ({ n: pad(i), text })),
+      functions: FN[lang].map(([name, role, brief], i) => ({ name, role, brief, n: pad(i) })),
+      steps: A.steps.map(([title, body], i) => ({ n: pad(i), title, body })),
+      stats: A.statKeys.map(k => STATS[lang][k])
+    };
+    const isEmp = audience === 'employers';
+    const hero = this.props.hero ?? 'pile';
+    const on = { bg: '#2b00c6', fg: '#ffffff' }, off = { bg: 'transparent', fg: '#0F0F4C' };
+    const fnNames = [...FN[lang].map(f => f[0]), lang === 'de' ? 'Andere' : 'Other'];
+    return {
+      t,
+      isPile: hero !== 'manifesto',
+      isManifesto: hero === 'manifesto',
+      isEmployer: isEmp,
+      isTalent: !isEmp,
+      tabTalentBg: isEmp ? off.bg : on.bg, tabTalentFg: isEmp ? off.fg : on.fg,
+      tabEmpBg: isEmp ? on.bg : off.bg, tabEmpFg: isEmp ? on.fg : off.fg,
+      enFg: lang === 'en' ? '#2b00c6' : '#8a8a9a', deFg: lang === 'de' ? '#2b00c6' : '#8a8a9a',
+      setTalent: () => this.setState({ audience: 'talent', submitted: false, openFaq: 0 }),
+      setEmployers: () => this.setState({ audience: 'employers', submitted: false, openFaq: 0 }),
+      setEn: () => this.setState({ lang: 'en' }),
+      setDe: () => this.setState({ lang: 'de' }),
+      faqItems: A.faq.map(([q, a], i) => {
+        const open = i === openFaq;
+        return { q, a, open, icon: open ? 'ph-minus' : 'ph-plus', iconBg: open ? '#2b00c6' : '#EDEDFC', iconFg: open ? '#fff' : '#2b00c6', toggle: () => this.setState({ openFaq: open ? -1 : i }) };
+      }),
+      fnChips: fnNames.map((name, i) => {
+        const sel = !!chips[i];
+        return { name, bg: sel ? '#2b00c6' : '#fff', fg: sel ? '#fff' : '#0F0F4C', bd: sel ? '#2b00c6' : '#C5C5D8', toggle: () => this.setState(s => ({ chips: { ...s.chips, [i]: !s.chips[i] } })) };
+      }),
+      submitted, notSubmitted: !submitted,
+      submit: e => { e.preventDefault(); this.setState({ submitted: true }); },
+      reset: () => this.setState({ submitted: false, chips: {} })
+    };
+  }
+}
+</script>
+</body>
+</html>
