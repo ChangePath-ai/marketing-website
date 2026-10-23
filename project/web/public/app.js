@@ -8,18 +8,14 @@
       errGeneric: 'Something went wrong. Please try again, or email support@changepath.ai.',
       errNetwork: 'We couldn’t reach the server. Check your connection and try again.',
       errEmail: 'Please enter a valid email address.',
-      errLinkedin: 'Please enter a LinkedIn profile URL, e.g. https://www.linkedin.com/in/your-name',
       otherPh: 'Which function? e.g. HR, Operations',
-      sending: 'Sending…',
       title: { talent: 'ChangePath – Proof of work for AI-fluent talent', employers: 'ChangePath – Hire AI-fluent talent on proof, not CVs' }
     },
     de: {
       errGeneric: 'Da ist etwas schiefgelaufen. Bitte versuch es noch einmal oder schreib an support@changepath.ai.',
       errNetwork: 'Keine Verbindung zum Server. Bitte prüf deine Verbindung und versuch es erneut.',
       errEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
-      errLinkedin: 'Bitte gib eine LinkedIn-Profil-URL ein, z. B. https://www.linkedin.com/in/dein-name',
       otherPh: 'Welcher Bereich? z. B. HR, Operations',
-      sending: 'Wird gesendet…',
       title: { talent: 'ChangePath – Proof of Work für KI-affine Talente', employers: 'ChangePath – KI-versierte Talente auf Basis von Arbeitsproben einstellen' }
     }
   };
@@ -42,7 +38,8 @@
     audience: /^employ/i.test(params.get('for') || '') ? 'employers' : 'talent',
     openFaq: 0,
     chips: new Set(),
-    signup: null // { email, firstName, lastName, token } once the main form went through
+    submitted: false, // shared by both sign-up forms
+    fnPage: 0
   };
 
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -56,9 +53,14 @@
   const icon = name => el('i', 'ph-bold ' + name);
   const pad = i => '0' + (i + 1);
 
-  const signupForm = $('#signup');
-  const liForm = $('#linkedin');
-  const otherInput = $('input[name="otherFunction"]', signupForm);
+  // Both sign-up forms (#waitlist and #proof) are built from one template.
+  const forms = $$('[data-form]').map(host => {
+    host.append($('#signup-tpl').content.cloneNode(true));
+    return { host, form: $('form', host) };
+  });
+
+  const FN_PER_PAGE = 3;
+  const fnPages = () => Math.ceil(FN[state.lang].length / FN_PER_PAGE);
 
   function copy() {
     const L = COPY[state.lang];
@@ -80,7 +82,7 @@
       row.append(el('div', 'num', pad(i)), body);
       return row;
     }),
-    functions: t => FN[state.lang].map(([name, role, brief], i) => {
+    functions: t => FN[state.lang].map((f, i) => [f, i]).slice(state.fnPage * FN_PER_PAGE, (state.fnPage + 1) * FN_PER_PAGE).map(([[name, role, brief], i]) => {
       const card = el('div', 'fn-card');
       const top = el('div', 'fn-top');
       top.append(el('div', 'fn-name', name), el('div', 'fn-n', pad(i)));
@@ -89,6 +91,16 @@
       card.append(top, el('div', 'fn-role', role), b);
       return card;
     }),
+    fnDots: () => Array.from({ length: fnPages() }, (_, p) => {
+      const b = el('button', 'car-dot');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Page ' + (p + 1));
+      b.setAttribute('aria-current', String(p === state.fnPage));
+      b.addEventListener('click', () => carousel.go(p));
+      return b;
+    }),
+    cmpOld: t => t.cmpOld.map(text => cmpItem('ph-x', text)),
+    cmpNew: t => t.cmpNew.map(text => cmpItem('ph-check', text)),
     steps: t => t.steps.map(([title, body], i) => {
       const s = el('div', 'step');
       s.append(el('div', 'step-n', pad(i)), el('div', 'step-t', title), el('p', 'step-b', body));
@@ -145,43 +157,59 @@
       item.append(btn, p);
       return item;
     }),
-    fields: t => {
-      const prev = Object.fromEntries($$('.form-fields input', signupForm).map(i => [i.name, i.value]));
-      return t.fields.map(f => {
-        const label = el('label', 'field');
-        const input = el('input', 'input');
-        input.type = f.type; input.name = f.name; input.placeholder = f.ph;
-        input.required = !!f.req; input.maxLength = f.type === 'email' ? 254 : 120;
-        input.autocomplete = { firstName: 'given-name', lastName: 'family-name', email: 'email', company: 'organization' }[f.name] || 'off';
-        if (prev[f.name]) input.value = prev[f.name];
-        label.append(el('span', 'field-label', f.label), input);
-        return label;
-      });
-    },
-    chips: () => fnNames().map((name, i) => {
+  };
+
+  function cmpItem(iconName, text) {
+    const d = el('div', 'cmp-item');
+    d.append(icon(iconName), el('span', null, text));
+    return d;
+  }
+
+  function renderFields(form, t) {
+    const box = $('[data-fields]', form);
+    const prev = Object.fromEntries($$('input', box).map(i => [i.name, i.value]));
+    box.replaceChildren(...t.fields.map((f, i) => {
+      // First and last name sit side by side; everything after spans the row.
+      const label = el('label', i < 2 ? 'field' : 'field field-wide');
+      const input = el('input', 'input');
+      input.type = f.type; input.name = f.name; input.placeholder = f.ph;
+      input.required = !!f.req; input.maxLength = f.type === 'email' ? 254 : 120;
+      input.autocomplete = { firstName: 'given-name', lastName: 'family-name', email: 'email', company: 'organization' }[f.name] || 'off';
+      if (prev[f.name]) input.value = prev[f.name];
+      label.append(el('span', 'field-label', f.label), input);
+      return label;
+    }));
+  }
+
+  function renderChips(form) {
+    $('[data-chips]', form).replaceChildren(...fnNames().map((name, i) => {
       const b = el('button', 'chip', name);
       b.type = 'button';
       b.setAttribute('aria-pressed', String(state.chips.has(i)));
       b.addEventListener('click', () => {
         state.chips.has(i) ? state.chips.delete(i) : state.chips.add(i);
-        renderList('chips');
-        syncOther(i === fnNames().length - 1);
+        forms.forEach(f => renderChips(f.form));
+        syncOther(i === fnNames().length - 1 ? form : null);
       });
       return b;
-    })
-  };
+    }));
+  }
 
   function renderList(name) {
     const t = copy();
     $$(`[data-list="${name}"]`).forEach(c => c.replaceChildren(...lists[name](t)));
   }
 
-  function syncOther(focus) {
+  // "Other" opens a required text field; focus it in the form that was clicked.
+  function syncOther(focusForm) {
     const on = state.chips.has(fnNames().length - 1);
-    otherInput.hidden = !on;
-    otherInput.required = on && state.audience === 'talent';
-    otherInput.placeholder = UI[state.lang].otherPh;
-    if (on && focus) otherInput.focus();
+    forms.forEach(({ form }) => {
+      const input = form.elements.otherFunction;
+      input.hidden = !on;
+      input.required = on && state.audience === 'talent';
+      input.placeholder = UI[state.lang].otherPh;
+      if (on && form === focusForm) input.focus();
+    });
   }
 
   function render() {
@@ -190,6 +218,12 @@
     document.title = UI[state.lang].title[state.audience];
     $$('[data-t]').forEach(n => { n.textContent = t[n.dataset.t] ?? ''; });
     Object.keys(lists).forEach(renderList);
+    forms.forEach(({ host, form }) => {
+      $('[data-cta]', form).textContent = t[host.dataset.cta] ?? '';
+      $('[data-fine]', form).textContent = t[host.dataset.fine] ?? '';
+      renderFields(form, t);
+      renderChips(form);
+    });
     $$('[data-show]').forEach(n => { n.hidden = n.dataset.show !== state.audience; });
     $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === state.lang)));
     $('#switch-audience').textContent = state.audience === 'employers' ? t.forTalent : t.forEmployers;
@@ -197,14 +231,14 @@
   }
 
   function showDone(done) {
-    signupForm.hidden = done;
-    $('#done').hidden = !done;
+    state.submitted = done;
+    forms.forEach(({ host }) => { host.hidden = done; });
+    $$('[data-done]').forEach(n => { n.hidden = !done; });
   }
 
   function setAudience(audience) {
     state.audience = audience;
     state.openFaq = 0;
-    state.signup = null;
     showDone(false);
     const url = new URL(location.href);
     audience === 'employers' ? url.searchParams.set('for', 'employers') : url.searchParams.delete('for');
@@ -238,16 +272,14 @@
     try {
       const body = await res.json();
       if (body && body.error === 'invalid_email') msg = UI[state.lang].errEmail;
-      if (body && body.error === 'invalid_linkedin') msg = UI[state.lang].errLinkedin;
     } catch { /* non-JSON error body */ }
     throw new Error(msg);
   }
 
-  signupForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    setError(signupForm, '');
-    if (!signupForm.reportValidity()) return;
-    const data = Object.fromEntries(new FormData(signupForm));
+  async function submit(form) {
+    setError(form, '');
+    if (!form.reportValidity()) return;
+    const data = Object.fromEntries(new FormData(form));
     const names = fnNames();
     const payload = {
       audience: state.audience,
@@ -259,51 +291,55 @@
       consent: data.consent === 'on',
       website: data.website
     };
-    setBusy(signupForm, true);
+    setBusy(form, true);
     try {
-      const { token } = await post('/api/subscribe', payload);
-      state.signup = { email: payload.email, firstName: payload.firstName, lastName: payload.lastName, token };
-      liForm.hidden = false;
-      $('#li-done').hidden = true;
+      await post('/api/subscribe', payload);
       showDone(true);
-      $('#done').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      $('[data-done]', form.closest('section')).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     } catch (err) {
-      setError(signupForm, err.message);
+      setError(form, err.message);
     } finally {
-      setBusy(signupForm, false);
+      setBusy(form, false);
     }
-  });
+  }
 
-  liForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    setError(liForm, '');
-    const input = liForm.elements.linkedin;
-    if (!liForm.reportValidity()) return;
-    if (!/^https?:\/\/([a-z0-9-]+\.)*linkedin\.com\//i.test(input.value.trim())) {
-      setError(liForm, UI[state.lang].errLinkedin);
-      input.focus();
-      return;
-    }
-    setBusy(liForm, true);
-    try {
-      await post('/api/linkedin', { ...state.signup, linkedin: input.value.trim(), lang: state.lang });
-      liForm.hidden = true;
-      $('#li-done').hidden = false;
-    } catch (err) {
-      setError(liForm, err.message);
-    } finally {
-      setBusy(liForm, false);
-    }
-  });
+  forms.forEach(({ form }) => form.addEventListener('submit', e => { e.preventDefault(); submit(form); }));
 
-  $('#again').addEventListener('click', () => {
-    signupForm.reset();
-    liForm.reset();
-    state.chips.clear();
-    state.signup = null;
-    showDone(false);
-    render();
-  });
+  // --- Functions carousel ----------------------------------------------------
+  // Advances every 6s, pauses on hover; dots and arrows switch at once and reset the timer.
+
+  const carousel = (() => {
+    const root = $('.carousel');
+    const grid = $('[data-list="functions"]', root);
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    let timer = null, fading = false, hovered = false;
+
+    function go(p, auto) {
+      if (p === state.fnPage || fading) return;
+      if (!auto) restart();
+      fading = true;
+      grid.classList.add('fading');
+      setTimeout(() => {
+        state.fnPage = p;
+        renderList('functions');
+        renderList('fnDots');
+        grid.classList.remove('fading');
+        fading = false;
+      }, still.matches ? 0 : 450);
+    }
+    const next = auto => go((state.fnPage + 1) % fnPages(), auto);
+    function restart() {
+      clearInterval(timer);
+      if (!still.matches) timer = setInterval(() => { if (!hovered) next(true); }, 6000);
+    }
+
+    root.addEventListener('mouseenter', () => { hovered = true; });
+    root.addEventListener('mouseleave', () => { hovered = false; });
+    $('.car-prev', root).addEventListener('click', () => go((state.fnPage + fnPages() - 1) % fnPages()));
+    $('.car-next', root).addEventListener('click', () => next(false));
+    restart();
+    return { go };
+  })();
 
   // --- Wiring --------------------------------------------------------------
 

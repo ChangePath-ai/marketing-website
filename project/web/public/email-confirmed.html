@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ChangePath · Email confirmed</title>
+<link rel="icon" href="assets/shapes.png">
+<link rel="stylesheet" href="icons.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+body{background:var(--ink)}
+.ec{min-height:100vh;display:flex;flex-direction:column;background:var(--ink);position:relative;overflow:hidden}
+.ec-shape{position:absolute;pointer-events:none}
+.ec-shape-1{right:-140px;top:-120px;width:min(560px,70vw);opacity:.16}
+.ec-shape-2{left:-160px;bottom:-200px;width:520px;opacity:.12}
+.ec .nav{position:relative;z-index:2;background:rgba(255,255,255,0.96);backdrop-filter:none;-webkit-backdrop-filter:none}
+.ec main{position:relative;z-index:1;flex:1;display:flex;align-items:center}
+.ec-in{width:100%;padding-top:clamp(48px,7vw,96px);padding-bottom:clamp(48px,7vw,96px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px 64px;align-items:center}
+.ec-copy{display:flex;flex-direction:column;gap:24px;color:#fff}
+.ec-h1{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(34px,4.6vw,62px);line-height:1.08;text-wrap:balance}
+.ec-h1>span{display:block}
+.ec-body{margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--mist);max-width:520px;text-wrap:pretty}
+.ec-next{display:flex;flex-direction:column;max-width:520px;margin-top:8px}
+.ec-next-label{font:600 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mist);padding-bottom:12px}
+.ec-step{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid rgba(255,255,255,0.16)}
+.ec-step-n{font-family:var(--display);font-weight:600;font-size:18px;background-image:linear-gradient(to right,#ffac73,#6c5eff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ec-step-t{font-size:16px;line-height:1.5;color:#fff}
+.ec-card{background:#fff;border-radius:28px;padding:clamp(24px,3vw,40px);box-shadow:0 40px 100px rgba(0,0,0,0.35);display:flex;flex-direction:column;gap:18px}
+.ec-card .stack{display:flex;flex-direction:column;gap:16px}
+.ec-title{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.2vw,28px);line-height:1.2;color:var(--ink);text-wrap:balance}
+.ec-text{margin:0;font-size:16px;line-height:1.55;color:var(--grey);text-wrap:pretty}
+.ec-cta{background:var(--brand);color:#fff;border-radius:9999px;padding:17px 26px;font:600 16px var(--sans);display:flex;justify-content:center;align-items:center;gap:10px;text-align:center}
+.ec-cta:hover{background:var(--brand-dark);color:#fff}
+.ec-fine{font-size:12px;line-height:1.5;color:var(--grey);text-align:center}
+.ec-fine a{text-decoration:underline;text-underline-offset:2px}
+.ec-foot-links{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line)}
+.ec-foot-links a{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.ec-foot-links .ec-follow{color:var(--grey)}
+.ec-foot-links .ec-follow:hover{color:var(--brand)}
+.ec .footer{position:relative;z-index:1;background:transparent}
+.ec .footer-in{padding-top:24px;padding-bottom:24px}
+</style>
+</head>
+<body>
+<div class="ec">
+  <img src="assets/shapes.png" alt="" class="ec-shape ec-shape-1">
+  <img src="assets/shapes.png" alt="" class="ec-shape ec-shape-2">
+
+  <header class="nav">
+    <div class="nav-in">
+      <a href="/" class="nav-logo" data-home><img src="assets/logo.png" alt="ChangePath" width="85" height="30"></a>
+      <div class="lang">
+        <button type="button" data-lang="en" aria-label="English">EN</button>
+        <span>/</span>
+        <button type="button" data-lang="de" aria-label="Deutsch">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap ec-in">
+      <div class="ec-copy">
+        <span class="done-check"><i class="ph-bold ph-check"></i></span>
+        <div class="label label-peach" data-t="label">Email confirmed</div>
+        <h1 class="ec-h1">
+          <span data-t="title1">You’re officially on the list.</span>
+          <span class="grad-text hero-grad" data-t="title2">Welcome to ChangePath.</span>
+        </h1>
+        <p class="ec-body" data-t="body"></p>
+        <div class="ec-next">
+          <div class="ec-next-label" data-t="nextLabel"></div>
+          <div data-steps></div>
+        </div>
+      </div>
+
+      <div class="ec-card">
+        <div class="stack">
+          <span class="pill pill-grad beta-pill"><i class="ph-bold ph-lightning"></i><span data-t="upBadge"></span></span>
+          <div class="ec-title" data-t="upTitle"></div>
+          <p class="ec-text" data-t="upBody"></p>
+          <a href="https://calendar.app.google/neaAVKg3YcJDFA3i9" target="_blank" rel="noopener" class="ec-cta"><span data-t="upCta"></span> <i class="ph-bold ph-arrow-right"></i></a>
+          <div class="ec-fine"><span data-t="upFine"></span> <a href="https://www.changepath.ai/datenschutz" target="_blank" rel="noopener" data-t="privacy"></a></div>
+        </div>
+        <div class="ec-foot-links">
+          <a href="/" data-home><i class="ph-bold ph-arrow-left"></i><span data-t="back"></span></a>
+          <a href="https://www.linkedin.com/in/maritzabonano/" target="_blank" rel="noopener" class="ec-follow"><i class="ph-bold ph-linkedin-logo"></i><span data-t="follow"></span></a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-in">
+      <div class="footer-brand"><span>ChangePath</span><span>©2026</span></div>
+      <div class="footer-links">
+        <a href="https://www.changepath.ai/impressum" target="_blank" rel="noopener" data-t="imprint">Imprint</a>
+        <a href="https://www.changepath.ai/datenschutz" target="_blank" rel="noopener" data-t="privacy">Privacy</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+(() => {
+  'use strict';
+  // Copy from the Claude Design handoff (Email Confirmed.dc.html).
+  const COPY = {
+    en: {
+      label: 'Email confirmed',
+      title1: 'You’re officially on the list.',
+      title2: 'Welcome to ChangePath.',
+      body: 'Thanks for confirming your email. Your spot on the waitlist is secured, and you’ll be among the first to test ChangePath for free.',
+      nextLabel: 'What happens next',
+      steps: ['We’ll email you as soon as your early-access spot opens.', 'You’ll get your first real job posting and a matching work-sample brief.', 'Build your proof with AI and apply with something employers can actually evaluate.'],
+      upBadge: 'SKIP THE LINE',
+      upTitle: 'Want in before everyone else?',
+      upBody: 'Book a 15-Minute call and we\'ll give you a walk through the product. If you like it, we\'ll add you to the founding members group - for free! ',
+      upCta: 'Book a 15-minute call and get access',
+      upFine: 'We only use your profile to assess beta fit and schedule your call.',
+      back: 'Back to the homepage', follow: 'Follow us',
+      imprint: 'Imprint', privacy: 'Privacy',
+      title: 'ChangePath · Email confirmed'
+    },
+    de: {
+      label: 'E-Mail bestätigt',
+      title1: 'Du bist offiziell auf der Liste.',
+      title2: 'Willkommen bei ChangePath.',
+      body: 'Danke für die Bestätigung deiner E-Mail-Adresse. Dein Platz auf der Warteliste ist gesichert – du gehörst zu den Ersten, die ChangePath kostenlos testen.',
+      nextLabel: 'So geht es weiter',
+      steps: ['Wir schreiben dir, sobald dein Early-Access-Platz frei ist.', 'Du erhältst eine echte Stellenanzeige und eine passende Praxisaufgabe.', 'Erstelle deine Arbeitsprobe mit KI und bewirb dich mit etwas, das Arbeitgeber wirklich bewerten können.'],
+      upBadge: 'ÜBERSPRING DIE WARTELISTE',
+      upTitle: 'Willst du früher rein?',
+      upBody: 'Vereinbare einen 15-minütigen Anruf und wir führen dich durch das Produkt. Wenn es dir gefällt, nehmen wir dich in die Gruppe der Gründungsmitglieder auf – ganz kostenlos!',
+      upCta: '15-Minuten-Call buchen und Zugang erhalten',
+      upFine: 'Wir nutzen dein Profil nur, um die Beta-Eignung zu prüfen und deinen Call zu planen.',
+      back: 'Zurück zur Startseite', follow: 'Folge uns',
+      imprint: 'Impressum', privacy: 'Datenschutz',
+      title: 'ChangePath · E-Mail bestätigt'
+    }
+  };
+
+  const q = new URLSearchParams(location.search).get('lang');
+  let lang = q === 'de' || q === 'en' ? q : 'en';
+
+  function render() {
+    const t = COPY[lang];
+    document.documentElement.lang = lang;
+    document.title = t.title;
+    document.querySelectorAll('[data-t]').forEach(n => { n.textContent = t[n.dataset.t] ?? ''; });
+    document.querySelector('[data-steps]').replaceChildren(...t.steps.map((text, i) => {
+      const row = document.createElement('div');
+      row.className = 'ec-step';
+      const n = document.createElement('div');
+      n.className = 'ec-step-n';
+      n.textContent = '0' + (i + 1);
+      const s = document.createElement('div');
+      s.className = 'ec-step-t';
+      s.textContent = text;
+      row.append(n, s);
+      return row;
+    }));
+    document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    document.querySelectorAll('[data-home]').forEach(a => { a.href = '/?lang=' + lang; });
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => {
+    lang = b.dataset.lang;
+    const url = new URL(location.href);
+    url.searchParams.set('lang', lang);
+    history.replaceState(null, '', url);
+    render();
+  }));
+
+  render();
+})();
+</script>
+</body>
+</html>

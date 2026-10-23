@@ -1,7 +1,6 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import subscribe from '../api/subscribe.js';
-import linkedin from '../api/linkedin.js';
 
 let calls;
 let replies;
@@ -40,7 +39,6 @@ const talent = { audience: 'talent', lang: 'en', firstName: 'Lena', lastName: 'W
 test('talent sign-up goes through Brevo double opt-in', async () => {
   const r = await call(subscribe, talent);
   assert.equal(r.code, 200);
-  assert.ok(r.data.token);
   assert.equal(calls.length, 1);
   const c = calls[0];
   assert.equal(c.url, 'https://api.brevo.com/v3/contacts/doubleOptinConfirmation');
@@ -49,7 +47,7 @@ test('talent sign-up goes through Brevo double opt-in', async () => {
     email: 'lena@email.com',
     attributes: { FIRSTNAME: 'Lena', LASTNAME: 'Weber', LANGUAGE: 'EN', AUDIENCE: 'talent', FUNCTIONS: 'Marketing, Other: HR' },
     includeListIds: [3], templateId: 7,
-    redirectionUrl: 'https://changepath.vercel.app/confirmed?lang=en'
+    redirectionUrl: 'https://changepath.vercel.app/email-confirmed?lang=en'
   });
 });
 
@@ -95,26 +93,4 @@ test('missing config is a 500 that does not name the setting', async () => {
   const r = await call(subscribe, talent);
   assert.equal(r.code, 500);
   assert.equal(r.data.error, 'server_error');
-});
-
-test('linkedin step needs the token from sign-up', async () => {
-  const { data } = await call(subscribe, talent);
-  calls = [];
-  const bad = await call(linkedin, { email: 'lena@email.com', token: 'x', linkedin: 'https://www.linkedin.com/in/lena' });
-  assert.equal(bad.code, 403);
-  replies.push([404, { code: 'document_not_found' }]);
-  const ok = await call(linkedin, { email: 'lena@email.com', token: data.token, firstName: 'Lena', lastName: 'Weber', linkedin: 'http://de.linkedin.com/in/lena' });
-  assert.equal(ok.code, 200);
-  assert.equal(calls[0].method, 'PUT');
-  assert.equal(calls[0].url, 'https://api.brevo.com/v3/contacts/lena%40email.com');
-  assert.deepEqual(calls[0].body, { attributes: { LINKEDIN: 'https://de.linkedin.com/in/lena' } });
-  assert.match(calls[1].body.htmlContent, /de\.linkedin\.com\/in\/lena/);
-});
-
-test('linkedin step rejects non-LinkedIn URLs', async () => {
-  const { data } = await call(subscribe, talent);
-  for (const url of ['https://evil.com/linkedin.com/in/x', 'javascript:alert(1)', 'https://linkedin.com.evil.com/in/x']) {
-    const r = await call(linkedin, { email: 'lena@email.com', token: data.token, linkedin: url });
-    assert.equal(r.data.error, 'invalid_linkedin', url);
-  }
 });

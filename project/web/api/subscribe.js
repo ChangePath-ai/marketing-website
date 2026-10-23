@@ -1,4 +1,4 @@
-import { brevo, clean, cleanEmail, env, handler, HttpError, notifyTeam, siteOrigin, signToken } from '../lib/brevo.js';
+import { brevo, clean, cleanEmail, env, handler, HttpError, notifyTeam, siteOrigin } from '../lib/brevo.js';
 
 const FUNCTIONS = ['Product', 'Design', 'Marketing', 'Sales', 'Legal', 'Finance', 'Other'];
 
@@ -7,7 +7,7 @@ const FUNCTIONS = ['Product', 'Design', 'Marketing', 'Sales', 'Legal', 'Finance'
 // once it is clicked.
 export default handler(async (body, req) => {
   // Honeypot: real visitors never see or fill the "website" field.
-  if (clean(body.website)) return { token: '' };
+  if (clean(body.website)) return {};
 
   const audience = body.audience === 'employers' ? 'employers' : 'talent';
   const lang = body.lang === 'de' ? 'de' : 'en';
@@ -34,7 +34,7 @@ export default handler(async (body, req) => {
 
   const listId = Number(env(audience === 'employers' ? 'BREVO_LIST_ID_EMPLOYERS' : 'BREVO_LIST_ID_TALENT'));
   const templateId = Number(env(lang === 'de' ? 'BREVO_DOI_TEMPLATE_ID_DE' : 'BREVO_DOI_TEMPLATE_ID_EN', { required: false }) || env('BREVO_DOI_TEMPLATE_ID'));
-  const redirectionUrl = env('BREVO_DOI_REDIRECT_URL', { required: false }) || `${siteOrigin(req)}/confirmed?lang=${lang}`;
+  const redirectionUrl = env('BREVO_DOI_REDIRECT_URL', { required: false }) || `${siteOrigin(req)}/email-confirmed?lang=${lang}`;
 
   const r = await brevo('/contacts/doubleOptinConfirmation', {
     body: { email, attributes, includeListIds: [listId], templateId, redirectionUrl }
@@ -56,5 +56,5 @@ export default handler(async (body, req) => {
     ]);
   }
 
-  return { token: signToken(email) };
+  return {};
 });

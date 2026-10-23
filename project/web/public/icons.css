@@ -70,3 +70,18 @@
 .ph-bold.ph-check:before {
   content: "\e182";
 }
+.ph-bold.ph-file-text:before {
+  content: "\e23a";
+}
+.ph-bold.ph-x:before {
+  content: "\e4f6";
+}
+.ph-bold.ph-seal-check:before {
+  content: "\e606";
+}
+.ph-bold.ph-arrow-left:before {
+  content: "\e058";
+}
+.ph-bold.ph-lightning:before {
+  content: "\e2de";
+}
