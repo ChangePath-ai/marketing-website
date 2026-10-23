@@ -4,7 +4,7 @@ const FN = {
     ['Product', 'AI Product Manager', 'Spec an AI feature from PRD to eval plan & LLM cost calculations.'],
     ['Design', 'AI-Augmented Product Designer', 'Prototype an onboarding flow end-to-end and get feedback from a synthetic audience.'],
     ['Marketing', 'AI Marketing Ops Lead', 'Create a content pipeline that builds a brand\'s visibility in LLM responses.'],
-    ['Sales', 'Sales Ops Manager, AI processes', 'Create a sales pipeline, enrigh the contacts and automate cold outreach for an ICP.'],
+    ['Sales', 'Sales Ops Manager, AI processes', 'Create a sales pipeline, enrich the contacts and automate cold outreach for an ICP.'],
     ['Legal', 'Legal Ops & AI Counsel', 'Create an AI-assisted contract-review tool for sales teams to create client offers.'],
     ['Finance', 'AI Finance & Controlling Lead', 'Create a yearly financial plan with 3 scenarios and ship a month-end variance explainer for leadership.']
   ],
@@ -74,14 +74,14 @@ const COPY = {
       cliches: ['Results-driven', 'Passionate about AI', 'Proven track record', 'Cross-functional team player', 'Leveraging cutting-edge tools'],
       proofChip: 'A proof page they actually open',
       visionLabel: 'Our vision', visionTitle: 'The future of hiring is proof of work', visionIntro: 'AI can write a resume in seconds. The problem? Hundreds of applications that all look the same. This makes showing how you combine AI with your area of expertise more important than ever.',
-      vision: [['A CV alone doesn\'t do the job', 'When everyone can use AI to customise a job application, everyone sounds similar. Employers need more than well-written CVs to identify great skills.'], ['Your expertise is your greatest asset', 'You bring valuable expertise to the table. When you apply it with AI, you can join the top 10% of your field and apply for the roles AI is creating.'], ['Less applications, stronger signal', 'Sending out 100\'s of applications per week is a waste of time. Choose the roles you really want to land. Show what you can build. Get the interview.  ']],
+      vision: [['A CV alone doesn\'t do the job', 'When everyone can use AI to customise a job application, everyone sounds similar. Employers need more than well-written CVs to identify great skills.'], ['Your expertise is your greatest asset', 'You bring valuable expertise to the table. When you apply it with AI, you can join the top 10% of your field and apply for the roles AI is creating.'], ['Fewer applications, stronger signal', 'Sending out 100\'s of applications per week is a waste of time. Choose the roles you really want to land. Show what you can build. Get the interview.  ']],
       fnTitle: 'Leverage your experience to land future-proof roles', fnSub: 'You don\'t need to know how to code or completely restart to benefit from AI. Discover what new job opportunities are available in your field and how you can impress employers with your skills.',
       howTitle: '4 Steps to a job application that gets noticed',
       steps: [
-        ['Job Matches', 'Upload your CV and discover job real openings where you can combine your professional experience with AI skills.'],
+        ['Job Matches', 'Upload your CV and discover real job openings where you can combine your professional experience with AI skills.'],
         ['Custom Brief', 'You\'ll receive a short project based on a real job posting. That way, you\'ll know exactly what skills are required for the job.'],
         ['Build your proof', 'Build it with AI. Create a work sample that makes your expertise shine.'],
-        ['Send a unique appllication', 'Apply to jobs using your shareable portfolio. Fewer and more focused applications means more replies.']
+        ['Send a unique application', 'Apply to jobs using your shareable portfolio. Fewer and more focused applications means more replies.']
       ],
       proofTitle: 'Stop applying for jobs like everyone else', proofSub: 'There are plenty of AI-generated resumes out there. With ChangePath, you can show employers what you’re really capable of and stand out from other applicants with real work samples.', betaBody: 'Sign up now for free and be one of the first to find out when you\'ll get access to the new application platform.',
       statsTitle: 'The jobs are open, but your CV looks like everyone else\'s', statKeys: ['a', 'b', 'c', 'd'],
@@ -124,7 +124,7 @@ const COPY = {
       steps: [
         ['Share a role', 'Share your job post link. No new ATS, no setup, no lengthy intake.'],
         ['We brief', 'We turn it into a role-specific work sample — the take-home task your hiring manager doesn\'t have time to design.'],
-        ['They show prove', 'Experienced, AI-fluent domain experts complete it and publish a proof page.'],
+        ['They show proof', 'Experienced, AI-fluent domain experts complete it and publish a proof page.'],
         ['You review', 'A short list of proof pages where candidates show their work. Share with the hiring loop and reduce the time per hire.']
       ],
       proofTitle: 'Curious what a proof page looks like for candidates?', proofSub: 'We’re in closed beta with a handpicked group of talent acquisition teams in Germany. Pilot spots are limited.', betaBody: 'Sign up to the list and we’ll update you as soon as we’re live. Early sign-ups get first access to pilot spots.',
