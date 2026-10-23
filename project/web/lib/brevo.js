@@ -1,5 +1,3 @@
-import { createHmac, timingSafeEqual } from 'node:crypto';
-
 const API = 'https://api.brevo.com/v3';
 
 export class HttpError extends Error {
@@ -42,18 +40,6 @@ export function cleanEmail(v) {
   const e = clean(v, 254).toLowerCase();
   if (!EMAIL_RE.test(e)) throw new HttpError(400, 'invalid_email');
   return e;
-}
-
-export function cleanLinkedin(v) {
-  const s = clean(v, 300);
-  let u;
-  try { u = new URL(s); } catch { throw new HttpError(400, 'invalid_linkedin'); }
-  const host = u.hostname.toLowerCase();
-  if (!/^https?:$/.test(u.protocol) || !(host === 'linkedin.com' || host.endsWith('.linkedin.com'))) {
-    throw new HttpError(400, 'invalid_linkedin');
-  }
-  u.protocol = 'https:';
-  return u.toString();
 }
 
 export const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -102,20 +88,6 @@ export function handler(fn) {
       return res.status(500).json({ error: 'server_error' });
     }
   };
-}
-
-// --- Signup token ----------------------------------------------------------
-// /api/subscribe hands the browser a token for the email it just signed up, so
-// /api/linkedin only accepts the LinkedIn step from the person who signed up.
-
-const tokenKey = () => env('SIGNUP_TOKEN_SECRET', { required: false }) || env('BREVO_API_KEY');
-
-export const signToken = email => createHmac('sha256', tokenKey()).update('signup:' + email).digest('base64url');
-
-export function verifyToken(email, token) {
-  const a = Buffer.from(signToken(email));
-  const b = Buffer.from(typeof token === 'string' ? token : '');
-  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 // --- Team notification -----------------------------------------------------

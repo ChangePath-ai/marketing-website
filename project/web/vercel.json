@@ -4,6 +4,9 @@
   "buildCommand": null,
   "outputDirectory": "public",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/confirmed", "destination": "/email-confirmed", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

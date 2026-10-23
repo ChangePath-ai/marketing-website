@@ -1,13 +1,12 @@
 # ChangePath landing page
 
-Production build of `ChangePath Landing.dc.html` from the Claude Design handoff. It is a static page (`public/`) plus two Vercel serverless functions (`api/`) that send sign-ups to Brevo. The Brevo API key only lives on the server.
+Production build of `ChangePath Landing.dc.html` from the Claude Design handoff. It is a static page (`public/`) plus a Vercel serverless function (`api/subscribe.js`) that sends sign-ups to Brevo. The Brevo API key only lives on the server.
 
 ```
-public/            the site (index.html, styles.css, app.js, copy.js, confirmed.html, fonts, assets)
+public/            the site (index.html, email-confirmed.html, styles.css, app.js, copy.js, fonts, assets)
   copy.js          all EN/DE copy for talent + employers, taken verbatim from the design
-api/subscribe.js   waitlist / pilot form  → Brevo double opt-in
-api/linkedin.js    "Skip the line" step   → saves LinkedIn on the contact + emails the team
-lib/brevo.js       shared helpers (validation, Brevo calls, origin check, signup token)
+api/subscribe.js   both sign-up forms     → Brevo double opt-in
+lib/brevo.js       shared helpers (validation, Brevo calls, origin check, team notification)
 test/              API tests with Brevo mocked: `npm test`
 ```
 
@@ -17,11 +16,10 @@ test/              API tests with Brevo mocked: `npm test`
 |---|---|---|
 | Talent waitlist | `POST /v3/contacts/doubleOptinConfirmation`: Brevo sends the confirmation email; the contact is added only after the click | `BREVO_LIST_ID_TALENT` |
 | Employer pilot request | same, plus a notification email to `NOTIFY_EMAIL` | `BREVO_LIST_ID_EMPLOYERS` |
-| LinkedIn "Skip the line" (talent) | `PUT /v3/contacts/{email}` sets `LINKEDIN` (works once they've confirmed), and always emails `NOTIFY_EMAIL` so you can book the 20-minute call | — |
 
-After clicking the confirmation link, people land on `/confirmed` (EN or DE).
+After clicking the confirmation link, people land on `/email-confirmed` (EN or DE), which offers a 15-minute call via the Google Calendar booking link. The old `/confirmed` address redirects there.
 
-Contact attributes written: `FIRSTNAME`, `LASTNAME`, `LANGUAGE` (EN/DE), `AUDIENCE` (talent/employers), `FUNCTIONS` (talent, e.g. `Marketing, Other: HR`), `COMPANY` and `HIRING_ROLE` (employers), `LINKEDIN`.
+Contact attributes written: `FIRSTNAME`, `LASTNAME`, `LANGUAGE` (EN/DE), `AUDIENCE` (talent/employers), `FUNCTIONS` (talent, e.g. `Marketing, Other: HR`), `COMPANY` and `HIRING_ROLE` (employers).
 
 Repository: https://github.com/ChangePath-ai/marketing-website
 
@@ -30,7 +28,7 @@ Repository: https://github.com/ChangePath-ai/marketing-website
 Log in at https://app.brevo.com. Menu names below are as of Oct 2026; Brevo occasionally moves them.
 
 1. **Lists:** Contacts → Lists → create two lists, e.g. "Waitlist – Talent" and "Pilot – Employers". Note each list's ID.
-2. **Attributes:** Contacts → Settings → Contact attributes. `FIRSTNAME` and `LASTNAME` exist already. Add these as **Text** attributes: `LANGUAGE`, `AUDIENCE`, `FUNCTIONS`, `COMPANY`, `HIRING_ROLE`, `LINKEDIN`.
+2. **Attributes:** Contacts → Settings → Contact attributes. `FIRSTNAME` and `LASTNAME` exist already. Add these as **Text** attributes: `LANGUAGE`, `AUDIENCE`, `FUNCTIONS`, `COMPANY`, `HIRING_ROLE`.
 3. **Double opt-in templates:** Campaigns → Templates → create a template for the confirmation email, one in English and one in German. Its tag must be `optin` and its button link must be `{{ doubleoptin }}`. Note the template IDs.
 4. **Sender:** Senders, domains & IPs → add and verify a sender such as `hello@changepath.ai` (also authenticate the changepath.ai domain, so mail doesn't land in spam).
 5. **API key:** https://app.brevo.com/settings/keys/api → **Generate a new API key**. Copy it straight into Vercel (step 2.3); Brevo shows it only once.
@@ -49,11 +47,10 @@ Log in at https://app.brevo.com. Menu names below are as of Oct 2026; Brevo occa
 | `BREVO_DOI_TEMPLATE_ID_EN` | yes* | `7` |
 | `BREVO_DOI_TEMPLATE_ID_DE` | yes* | `8` |
 | `BREVO_SENDER_EMAIL` | yes | `hello@changepath.ai` (verified in Brevo) |
-| `NOTIFY_EMAIL` | yes | `support@changepath.ai` (comma-separate several) |
+| `NOTIFY_EMAIL` | yes | `support@changepath.ai`: gets an email for each employer pilot request (comma-separate several) |
 | `BREVO_SENDER_NAME` | no | `ChangePath` |
 | `SITE_URL` | recommended | `https://get.changepath.ai` (used for the confirmation redirect and the origin check) |
-| `BREVO_DOI_REDIRECT_URL` | no | overrides the default `SITE_URL/confirmed?lang=…` |
-| `SIGNUP_TOKEN_SECRET` | no | any long random string; defaults to deriving from the API key |
+| `BREVO_DOI_REDIRECT_URL` | no | overrides the default `SITE_URL/email-confirmed?lang=…` |
 
 \* `BREVO_DOI_TEMPLATE_ID` can be set instead as a single template for both languages.
 
@@ -66,7 +63,7 @@ The page runs on the subdomain `get.changepath.ai`. The main site at www.changep
 1. In Vercel, open the project → **Settings → Domains** → add `get.changepath.ai`.
 2. Vercel shows a **CNAME** record for `get` (usually pointing to `cname.vercel-dns.com`; use the exact value Vercel shows). Add it wherever changepath.ai's DNS is managed. If the domain is registered through Wix, that's the domain's **DNS records** page in your Wix account; add the CNAME there and leave the existing records alone.
 3. Wait until Vercel shows the domain as **Valid** (usually minutes, up to a few hours). Vercel sets up HTTPS on its own.
-4. Set `SITE_URL` to `https://get.changepath.ai` and redeploy (**Deployments → ⋯ → Redeploy**), so confirmation emails send people back to `https://get.changepath.ai/confirmed`.
+4. Set `SITE_URL` to `https://get.changepath.ai` and redeploy (**Deployments → ⋯ → Redeploy**), so confirmation emails send people back to `https://get.changepath.ai/email-confirmed`.
 
 ## Making changes
 

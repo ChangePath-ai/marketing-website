@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>ChangePath · Email confirmed</title>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+@font-face{font-family:"Galano Classic";src:url("fonts/GalanoClassic-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Spline Sans";src:url("fonts/SplineSans-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+body{margin:0;background:#0F0F4C;color:#0F0F4C;font-family:"Spline Sans",ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#2b00c6;text-decoration:none}
+a:hover{color:#3620cc}
+input::placeholder{color:#8a8a9a}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;background:#0F0F4C;position:relative;overflow:hidden">
+  <img src="assets/shapes.png" alt="" style="position:absolute;right:-140px;top:-120px;width:min(560px,70vw);opacity:.16;pointer-events:none">
+  <img src="assets/shapes.png" alt="" style="position:absolute;left:-160px;bottom:-200px;width:520px;opacity:.12;pointer-events:none">
+
+  <header style="position:relative;z-index:2;background:rgba(255,255,255,0.96);border-bottom:1px solid #e8e8ea">
+    <div style="max-width:1280px;margin:0 auto;padding:14px clamp(20px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <a href="ChangePath Landing.dc.html" style="display:flex;align-items:center"><img src="assets/logo.png" alt="ChangePath" style="height:30px;width:auto;display:block"></a>
+      <div style="display:flex;gap:2px;font:600 12px 'Spline Sans',sans-serif;letter-spacing:.05em">
+        <button onClick="{{ setEn }}" style="border:none;background:none;cursor:pointer;padding:6px;font:inherit;color:{{ enFg }}">EN</button>
+        <span style="color:#C5C5D8;padding:6px 0">/</span>
+        <button onClick="{{ setDe }}" style="border:none;background:none;cursor:pointer;padding:6px;font:inherit;color:{{ deFg }}">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <main data-screen-label="Email confirmed" style="position:relative;z-index:1;flex:1;display:flex;align-items:center">
+    <div style="max-width:1280px;width:100%;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px 64px;align-items:center">
+
+      <div style="display:flex;flex-direction:column;gap:24px;color:#fff">
+        <span style="width:64px;height:64px;border-radius:50%;background:#3ac0a0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px"><i class="ph-bold ph-check"></i></span>
+        <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#ffac73">{{ t.label }}</div>
+        <h1 style="margin:0;font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(34px,4.6vw,62px);line-height:1.08;text-wrap:balance">
+          <span style="display:block;color:#fff">{{ t.title1 }}</span>
+          <span style="display:block;background:linear-gradient(to right,#ffac73,#ff9564 35%,#6c5eff 85%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:6px">{{ t.title2 }}</span>
+        </h1>
+        <p style="margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:#d4d4f5;max-width:520px;text-wrap:pretty">{{ t.body }}</p>
+        <div style="display:flex;flex-direction:column;gap:0;max-width:520px;margin-top:8px">
+          <div style="font:600 11px 'Spline Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#d4d4f5;padding-bottom:12px">{{ t.nextLabel }}</div>
+          <sc-for list="{{ t.steps }}" as="s" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid rgba(255,255,255,0.16)">
+              <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:18px;background:linear-gradient(to right,#ffac73,#6c5eff);-webkit-background-clip:text;background-clip:text;color:transparent">{{ s.n }}</div>
+              <div style="font-size:16px;line-height:1.5;color:#fff">{{ s.text }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="background:#fff;border-radius:28px;padding:clamp(24px,3vw,40px);box-shadow:0 40px 100px rgba(0,0,0,0.35);display:flex;flex-direction:column;gap:18px">
+        <sc-if value="{{ liNotSent }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitLi }}" style="display:flex;flex-direction:column;gap:16px">
+            <span style="align-self:flex-start;display:flex;align-items:center;gap:6px;background:linear-gradient(to right,#ff9564,#6c5eff);color:#fff;border-radius:9999px;padding:5px 12px;font:600 10px 'Spline Sans',sans-serif;letter-spacing:.1em"><i class="ph-bold ph-lightning" style="font-size:11px"></i>{{ t.upBadge }}</span>
+            <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:clamp(22px,2.2vw,28px);line-height:1.2;color:#0F0F4C;text-wrap:balance">{{ t.upTitle }}</div>
+            <p style="margin:0;font-size:16px;line-height:1.55;color:#5B5B6B;text-wrap:pretty">{{ t.upBody }}</p>
+            <a href="https://calendar.app.google/neaAVKg3YcJDFA3i9" target="_blank" rel="noopener" style="background:#2b00c6;color:#fff;border-radius:9999px;padding:17px 26px;font:600 16px 'Spline Sans',sans-serif;display:flex;justify-content:center;align-items:center;gap:10px;text-align:center" style-hover="background:#2200a0;color:#fff">{{ t.upCta }} <i class="ph-bold ph-arrow-right"></i></a>
+            <div style="font-size:12px;line-height:1.5;color:#5B5B6B;text-align:center">{{ t.upFine }} <a href="https://www.changepath.ai/datenschutz" target="_blank" rel="noopener" style="color:#2b00c6;text-decoration:underline;text-underline-offset:2px">{{ t.privacy }}</a></div>
+          </form>
+        </sc-if>
+        <sc-if value="{{ liSent }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;padding:8px 0">
+            <span style="width:56px;height:56px;border-radius:50%;background:linear-gradient(to right,#ff9564,#6c5eff);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px"><i class="ph-bold ph-calendar-check"></i></span>
+            <div style="font-family:'Galano Classic',sans-serif;font-weight:600;font-size:26px;line-height:1.2;color:#0F0F4C">{{ t.doneTitle }}</div>
+            <p style="margin:0;font-size:16px;line-height:1.55;color:#5B5B6B">{{ t.doneBody }}</p>
+          </div>
+        </sc-if>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid #e8e8ea">
+          <a href="ChangePath Landing.dc.html" style="display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:#2b00c6" style-hover="color:#3620cc"><i class="ph-bold ph-arrow-left"></i>{{ t.back }}</a>
+          <a href="https://www.linkedin.com/in/maritzabonano/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:#5B5B6B" style-hover="color:#2b00c6"><i class="ph-bold ph-linkedin-logo"></i>{{ t.follow }}</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.12)">
+    <div style="max-width:1280px;margin:0 auto;padding:24px clamp(20px,4vw,56px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:#d4d4f5">
+      <div style="display:flex;align-items:center;gap:14px"><span style="font-family:'Galano Classic',sans-serif;font-weight:600;color:#fff;font-size:16px">ChangePath</span><span>©2026</span></div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <a href="https://www.changepath.ai/impressum" target="_blank" rel="noopener" style="color:#d4d4f5" style-hover="color:#fff">{{ t.imprint }}</a>
+        <a href="https://www.changepath.ai/datenschutz" target="_blank" rel="noopener" style="color:#d4d4f5" style-hover="color:#fff">{{ t.privacy }}</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;de&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'de'&quot;}}">
+const COPY = {
+  en: {
+    label: 'Email confirmed',
+    title1: 'You’re officially on the list.',
+    title2: 'Welcome to ChangePath.',
+    body: 'Thanks for confirming your email. Your spot on the waitlist is secured, and you’ll be among the first to test ChangePath for free.',
+    nextLabel: 'What happens next',
+    steps: ['We’ll email you as soon as your early-access spot opens.', 'You’ll get your first real job posting and a matching work-sample brief.', 'Build your proof with AI and apply with something employers can actually evaluate.'],
+    upBadge: 'SKIP THE LINE',
+    upTitle: 'Want in before everyone else?',
+    upBody: 'Book a 15-Minute call and we\'ll give you a walk through the product. If you like it, we\'ll add you to the founding members group - for free! ',
+    perks: ['A free 20-minute call with our founder to map your first project'],
+    liLabel: 'LinkedIn profile',
+    upCta: 'Book a 15-minute call and get access',
+    upFine: 'We only use your profile to assess beta fit and schedule your call.',
+    doneTitle: 'You’re in the beta queue.',
+    doneBody: 'We’ll review your profile and email you a link to book your 20-minute call.',
+    back: 'Back to the homepage', follow: 'Follow us',
+    imprint: 'Imprint', privacy: 'Privacy'
+  },
+  de: {
+    label: 'E-Mail bestätigt',
+    title1: 'Du bist offiziell auf der Liste.',
+    title2: 'Willkommen bei ChangePath.',
+    body: 'Danke für die Bestätigung deiner E-Mail-Adresse. Dein Platz auf der Warteliste ist gesichert – du gehörst zu den Ersten, die ChangePath kostenlos testen.',
+    nextLabel: 'So geht es weiter',
+    steps: ['Wir schreiben dir, sobald dein Early-Access-Platz frei ist.', 'Du erhältst eine echte Stellenanzeige und eine passende Praxisaufgabe.', 'Erstelle deine Arbeitsprobe mit KI und bewirb dich mit etwas, das Arbeitgeber wirklich bewerten können.'],
+    upBadge: 'ÜBERSPRING DIE WARTELISTE',
+    upTitle: 'Willst du früher rein?',
+    upBody: 'Vereinbare einen 15-minütigen Anruf und wir führen dich durch das Produkt. Wenn es dir gefällt, nehmen wir dich in die Gruppe der Gründungsmitglieder auf – ganz kostenlos!',
+    perks: ['Ein kostenloses 20-Minuten-Gespräch mit unserer Gründerin für dein erstes Projekt'],
+    liLabel: 'LinkedIn-Profil',
+    upCta: '15-Minuten-Call buchen und Zugang erhalten',
+    upFine: 'Wir nutzen dein Profil nur, um die Beta-Eignung zu prüfen und deinen Call zu planen.',
+    doneTitle: 'Du bist in der Beta-Warteschlange.',
+    doneBody: 'Wir schauen uns dein Profil an und schicken dir per E-Mail einen Link für dein 20-Minuten-Gespräch.',
+    back: 'Zurück zur Startseite', follow: 'Folge uns',
+    imprint: 'Impressum', privacy: 'Datenschutz'
+  }
+};
+
+class Component extends DCLogic {
+  state = { lang: null, liSent: false };
+  componentDidMount() {
+    const q = new URLSearchParams(location.search).get('lang');
+    if (!this.state.lang && (q === 'de' || q === 'en')) this.setState({ lang: q });
+  }
+  renderVals() {
+    const lang = this.state.lang || this.props.lang || 'en';
+    const t = COPY[lang];
+    return {
+      t: { ...t, steps: t.steps.map((text, i) => ({ n: '0' + (i + 1), text })) },
+      enFg: lang === 'en' ? '#2b00c6' : '#8a8a9a',
+      deFg: lang === 'de' ? '#2b00c6' : '#8a8a9a',
+      setEn: () => this.setState({ lang: 'en' }),
+      setDe: () => this.setState({ lang: 'de' }),
+      liSent: this.state.liSent, liNotSent: !this.state.liSent,
+      submitLi: e => { e.preventDefault(); this.setState({ liSent: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
