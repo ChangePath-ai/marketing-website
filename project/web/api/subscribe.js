@@ -7,7 +7,10 @@ const FUNCTIONS = ['Product', 'Design', 'Marketing', 'Sales', 'Legal', 'Finance'
 // once it is clicked.
 export default handler(async (body, req) => {
   // Honeypot: real visitors never see or fill the "website" field.
-  if (clean(body.website)) return {};
+  if (clean(body.website)) {
+    console.warn('signup dropped: spam trap filled');
+    return {};
+  }
 
   const audience = body.audience === 'employers' ? 'employers' : 'talent';
   const lang = body.lang === 'de' ? 'de' : 'en';
@@ -44,6 +47,7 @@ export default handler(async (body, req) => {
     console.error('brevo doi failed', r.status, r.data);
     throw new HttpError(502, 'upstream');
   }
+  console.log('signup sent to brevo', { audience, lang, listId, templateId });
 
   if (audience === 'employers') {
     await notifyTeam(`New pilot request: ${attributes.COMPANY}`, [

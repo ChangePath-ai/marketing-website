@@ -289,7 +289,7 @@
       functions: state.audience === 'talent' ? [...state.chips].sort().map(i => i === names.length - 1 ? 'Other' : FN.en[i][0]) : [],
       otherFunction: state.chips.has(names.length - 1) ? data.otherFunction : '',
       consent: data.consent === 'on',
-      website: data.website
+      website: data.cp_extra
     };
     setBusy(form, true);
     try {
