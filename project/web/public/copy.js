@@ -101,7 +101,6 @@ const COPY = {
       formLabel: 'JOIN NOW FOR EARLY ACCESS ', formTitle: 'Stop sending CVs into the void', formSub: 'Show employers why YOU are the right choice instead of being lost with the next AI-generated application.',
       fields: [
         { name: 'firstName', label: 'First name', ph: 'Lena', type: 'text', req: true },
-        { name: 'lastName', label: 'Last name', ph: 'Weber', type: 'text', req: true },
         { name: 'email', label: 'Email', ph: 'lena@email.com', type: 'email', req: true }
       ],
       consentPre: 'I agree that ChangePath may store and use my data to contact me about early access. I can withdraw my consent at any time by emailing support@changepath.ai. Details in our ', consentLink: 'privacy policy', consentPost: '.', chipLabel: 'Your function', formCta: 'Join the waitlist', formFine: 'No spam. We’ll only email you about early access.',
@@ -216,7 +215,6 @@ const COPY = {
       formLabel: 'KOSTENLOSER EARLY ACCESS · COMING SOON', formTitle: 'Schluss mit Bewerbungen ins Leere.', formSub: 'Zeig Arbeitgebern, warum DU die richtige Wahl bist, statt mit der nächsten KI-generierten Bewerbung unterzugehen.',
       fields: [
         { name: 'firstName', label: 'Vorname', ph: 'Lena', type: 'text', req: true },
-        { name: 'lastName', label: 'Nachname', ph: 'Weber', type: 'text', req: true },
         { name: 'email', label: 'E-Mail', ph: 'lena@email.de', type: 'email', req: true }
       ],
       consentPre: 'Ich willige ein, dass ChangePath meine Daten speichert und nutzt, um mich zum Early Access zu kontaktieren. Ich kann meine Einwilligung jederzeit per E-Mail an support@changepath.ai widerrufen. Mehr in der ', consentLink: 'Datenschutzerklärung', consentPost: '.', chipLabel: 'Dein Bereich', formCta: 'Jetzt kostenlosen Early Access sichern', formFine: 'Kostenlos & unverbindlich. Kein Spam. ',

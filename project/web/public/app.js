@@ -8,14 +8,14 @@
       errGeneric: 'Something went wrong. Please try again, or email support@changepath.ai.',
       errNetwork: 'We couldn’t reach the server. Check your connection and try again.',
       errEmail: 'Please enter a valid email address.',
-      otherPh: 'Which function? e.g. HR, Operations',
+      errFunction: 'Please choose your function.',
       title: { talent: 'ChangePath – Proof of work for AI-fluent talent', employers: 'ChangePath – Hire AI-fluent talent on proof, not CVs' }
     },
     de: {
       errGeneric: 'Da ist etwas schiefgelaufen. Bitte versuch es noch einmal oder schreib an support@changepath.ai.',
       errNetwork: 'Keine Verbindung zum Server. Bitte prüf deine Verbindung und versuch es erneut.',
       errEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
-      otherPh: 'Welcher Bereich? z. B. HR, Operations',
+      errFunction: 'Bitte wähle deinen Bereich.',
       title: { talent: 'ChangePath – Proof of Work für KI-affine Talente', employers: 'ChangePath – KI-versierte Talente auf Basis von Arbeitsproben einstellen' }
     }
   };
@@ -37,7 +37,7 @@
     lang: pickLang(),
     audience: /^employ/i.test(params.get('for') || '') ? 'employers' : 'talent',
     openFaq: 0,
-    chips: new Set(),
+    fn: -1, // chosen function chip (single choice, as in the Brevo form)
     submitted: false, // shared by both sign-up forms
     fnPage: 0
   };
@@ -58,6 +58,11 @@
     host.append($('#signup-tpl').content.cloneNode(true));
     return { host, form: $('form', host) };
   });
+
+  // Talent sign-ups post straight to the Brevo form "Waitlist" (simple HTML embed).
+  // JOB_FIELD option values follow the order of the chips: Product = 1 … Other = 7.
+  const BREVO_FORM_URL = 'https://d438b4f3.sibforms.com/serve/MUIFANsCVGaD0BWq0rCTzz8mhUZtQbJVftCeP6mlFxDiNiezbUxX7Aeaxsuq0GLGbrh7VWZ8unLzagGbfun3bHpLjLwd9QlyAgBzgwpA0gRsTI8DmqyjIwXNjTapwTkJSGLjQBg3p8o0p5xMzF3pMI4yGu5TkhI0k6qsadTTeKH5dN6M8HZqQnJVabJznjcaDfbtUyNqXw4Zo2d6yQ==';
+  const UTM_KEYS = ['utm_campaign', 'utm_medium', 'utm_source', 'utm_content'];
 
   const FN_PER_PAGE = 3;
   const fnPages = () => Math.ceil(FN[state.lang].length / FN_PER_PAGE);
@@ -169,8 +174,9 @@
     const box = $('[data-fields]', form);
     const prev = Object.fromEntries($$('input', box).map(i => [i.name, i.value]));
     box.replaceChildren(...t.fields.map((f, i) => {
-      // First and last name sit side by side; everything after spans the row.
-      const label = el('label', i < 2 ? 'field' : 'field field-wide');
+      // First and last name sit side by side; everything else spans the row.
+      const pair = t.fields.some(x => x.name === 'lastName') && (f.name === 'firstName' || f.name === 'lastName');
+      const label = el('label', pair ? 'field' : 'field field-wide');
       const input = el('input', 'input');
       input.type = f.type; input.name = f.name; input.placeholder = f.ph;
       input.required = !!f.req; input.maxLength = f.type === 'email' ? 254 : 120;
@@ -185,11 +191,10 @@
     $('[data-chips]', form).replaceChildren(...fnNames().map((name, i) => {
       const b = el('button', 'chip', name);
       b.type = 'button';
-      b.setAttribute('aria-pressed', String(state.chips.has(i)));
+      b.setAttribute('aria-pressed', String(state.fn === i));
       b.addEventListener('click', () => {
-        state.chips.has(i) ? state.chips.delete(i) : state.chips.add(i);
-        forms.forEach(f => renderChips(f.form));
-        syncOther(i === fnNames().length - 1 ? form : null);
+        state.fn = state.fn === i ? -1 : i;
+        forms.forEach(f => { renderChips(f.form); setError(f.form, ''); });
       });
       return b;
     }));
@@ -198,18 +203,6 @@
   function renderList(name) {
     const t = copy();
     $$(`[data-list="${name}"]`).forEach(c => c.replaceChildren(...lists[name](t)));
-  }
-
-  // "Other" opens a required text field; focus it in the form that was clicked.
-  function syncOther(focusForm) {
-    const on = state.chips.has(fnNames().length - 1);
-    forms.forEach(({ form }) => {
-      const input = form.elements.otherFunction;
-      input.hidden = !on;
-      input.required = on && state.audience === 'talent';
-      input.placeholder = UI[state.lang].otherPh;
-      if (on && form === focusForm) input.focus();
-    });
   }
 
   function render() {
@@ -227,7 +220,6 @@
     $$('[data-show]').forEach(n => { n.hidden = n.dataset.show !== state.audience; });
     $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === state.lang)));
     $('#switch-audience').textContent = state.audience === 'employers' ? t.forTalent : t.forEmployers;
-    syncOther(false);
   }
 
   function showDone(done) {
@@ -276,24 +268,47 @@
     throw new Error(msg);
   }
 
+  // Brevo's form endpoint answers without CORS headers, so the response can't be
+  // read: a request that reaches it counts as sent, a network failure as an error.
+  async function postToBrevoForm(data) {
+    const body = new URLSearchParams({
+      VORNAME: data.firstName,
+      EMAIL: data.email,
+      JOB_FIELD: String(state.fn + 1),
+      email_address_check: data.cp_extra || '',
+      locale: state.lang,
+      html_type: 'simple'
+    });
+    UTM_KEYS.forEach(k => body.set(k.toUpperCase(), params.get(k) || ''));
+    try {
+      await fetch(BREVO_FORM_URL, { method: 'POST', mode: 'no-cors', body });
+    } catch {
+      throw new Error(UI[state.lang].errNetwork);
+    }
+  }
+
   async function submit(form) {
     setError(form, '');
     if (!form.reportValidity()) return;
+    const talent = state.audience === 'talent';
+    if (talent && state.fn < 0) {
+      setError(form, UI[state.lang].errFunction);
+      return;
+    }
     const data = Object.fromEntries(new FormData(form));
-    const names = fnNames();
-    const payload = {
-      audience: state.audience,
-      lang: state.lang,
-      firstName: data.firstName, lastName: data.lastName, email: data.email,
-      company: data.company, role: data.role,
-      functions: state.audience === 'talent' ? [...state.chips].sort().map(i => i === names.length - 1 ? 'Other' : FN.en[i][0]) : [],
-      otherFunction: state.chips.has(names.length - 1) ? data.otherFunction : '',
-      consent: data.consent === 'on',
-      website: data.cp_extra
-    };
     setBusy(form, true);
     try {
-      await post('/api/subscribe', payload);
+      if (talent) {
+        await postToBrevoForm(data);
+      } else {
+        await post('/api/subscribe', {
+          audience: 'employers', lang: state.lang,
+          firstName: data.firstName, lastName: data.lastName, email: data.email,
+          company: data.company, role: data.role,
+          consent: data.consent === 'on',
+          website: data.cp_extra
+        });
+      }
       showDone(true);
       $('[data-done]', form.closest('section')).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     } catch (err) {
